@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="widget-appearence">
     <component
       v-for="(item, i) in widgetStyle"
       v-if="item.type === activeElement.type"

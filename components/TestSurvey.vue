@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="test-survey">
     <form class="final-survey" @submit.prevent="handleSubmit">
       <div
         class="widget-list d-flex fd-c item"
@@ -15,7 +15,8 @@
           :data-uuid="val.uuid"
         />
       </div>
-      <input type="submit" />
+      <input v-if="formData.length" type="submit" />
+      <p v-else> Nothing to show :) </p>
     </form>
   </div>
 </template>

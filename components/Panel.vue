@@ -8,7 +8,7 @@
 
 <script>
 import widget from '@/utils/widget-plugin';
-import WidgetAppearence from '@/components/widgets/widgetAppearence';
+import WidgetAppearence from '@/components/widgets/WidgetAppearence';
 export default {
   name: 'Panel',
   mounted() {

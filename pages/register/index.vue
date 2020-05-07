@@ -16,7 +16,7 @@
                 :class="{
                   invalid:
                     ($v.firstname.$dirty && !$v.firstname.required)
-                 
+
                 }"
                 v-model.trim="$v.firstname.$model"
                 type="text"
@@ -95,7 +95,7 @@
 
         <small class="auth-footer">
           <span>Already have an account?</span>
-          <nuxt-link to="login">Login</nuxt-link>
+          <nuxt-link to="/login">Login</nuxt-link>
         </small>
       </div>
       <div class="description">

@@ -3,10 +3,10 @@
     <Tabs class="tab-wrapper" orientation="vertical">
       <Tab class="tab" name="Survey Designer" :selected="true">
         <splitpanes style="height: 100%">
-          <pane size="12" min-size="10">
+          <pane size="20" min-size="10">
             <Toolbar />
           </pane>
-          <pane size="68" min-size="10">
+          <pane size="60" min-size="50">
             <Viewport />
           </pane>
           <pane size="20" min-size="10">

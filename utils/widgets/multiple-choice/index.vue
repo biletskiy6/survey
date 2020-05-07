@@ -9,7 +9,7 @@
       :key="index"
       v-for="(row, index) in val.choiceRows"
     >
-      <vs-checkbox v-model="formData[0][row.id]"></vs-checkbox>
+      <vs-checkbox></vs-checkbox>
       <input
         readonly
         class="custom-input"

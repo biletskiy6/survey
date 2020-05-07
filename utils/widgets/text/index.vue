@@ -5,7 +5,6 @@
     <p>{{ val.questionDescription }}</p>
 
     <vs-input
-      v-model="formData[val.uuid]"
       :readonly="readonly"
       class="inputx"
     />

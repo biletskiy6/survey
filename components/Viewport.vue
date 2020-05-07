@@ -18,7 +18,6 @@
           class="widget"
           :is="val.type"
           :val="val"
-          :formData="formData"
           :readonly="true"
           :data-uuid="val.uuid"
         />

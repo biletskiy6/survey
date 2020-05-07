@@ -273,6 +273,14 @@ body {
 // ======================================================================================
 // Other
 // ======================================================================================
+
+.vs-checkbox--check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 .editable-input .vs-inputx {
   border-top: none !important;
   border-left: none !important;
@@ -354,6 +362,7 @@ input.invalid {
   background-color: #fff;
   // border-bottom: 1px solid $theme-light-border-color;
   margin-bottom: 30px;
+  box-shadow: 0 2px 6px 1px rgba(92,104,152,.1);
   margin-top: 30px;
 
   li {

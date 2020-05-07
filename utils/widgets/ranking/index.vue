@@ -19,7 +19,7 @@
         <input
           readonly
           class="custom-input"
-          placeholder="Question text"
+          placeholder="Option text"
           :data-uuid="row.id"
           :value="row.value"
           type="text"

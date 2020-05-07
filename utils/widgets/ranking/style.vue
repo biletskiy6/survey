@@ -18,9 +18,13 @@
       "
     />
 
-    <div class="multiple-choice item" :key="row.id" v-for="row in rankingRows">
+    <vs-divider/>
+
+
+    <div class="item mb-1 " :key="row.id" v-for="row in rankingRows">
       <input
-        class="custom-input mb1"
+        placeholder="Enter option text"
+        class="custom-input"
         @input="updateRankingRow($event, row.id)"
         :value="row.value"
         type="text"

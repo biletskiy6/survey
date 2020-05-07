@@ -61,14 +61,9 @@ export const mutations = {
     state.uuid = uuid;
     console.log(state.widgets, uuid);
     state.activeElement = state.widgets.find(w => w.uuid === uuid);
-    // const obj = state.widgets.find(w => w.uuid === uuid);
-    // console.log(obj);
-    // state.activeElement = { ...obj };
-    // console.log('1', uuid, state);
   },
   updateData(state, data) {
     let widget = state.widgets.find(w => w.uuid === data.uuid);
-
     widget[data.key] = data.value;
 
     // let widget = state.widgets.find(w => w.uuid === data.uuid);
@@ -167,9 +162,6 @@ export const actions = {
   updateWidgets({ commit }, newArray) {
     commit('updateWidgets', newArray);
   },
-  // select({ commit }, uuid) {
-  //   commit('select', { uuid });
-  // },
   updateData({ commit }, data) {
     commit('updateData', data);
   }

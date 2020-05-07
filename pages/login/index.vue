@@ -69,7 +69,7 @@
 
         <small class="auth-footer">
           <span>Dont have an account?</span>
-          <nuxt-link to="register">Create</nuxt-link>
+          <nuxt-link to="/register">Create</nuxt-link>
         </small>
       </div>
       <div class="description">

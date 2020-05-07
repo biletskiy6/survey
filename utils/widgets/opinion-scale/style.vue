@@ -17,6 +17,22 @@
         updateWidgetData($event, activeElement.uuid, 'questionDescription')
       "
     />
+
+
+    <vs-select
+
+      v-model="numberOfScales"
+      class="con-select-example"
+      label="Number of scales"
+      icon="keyboard_arrow_down"
+    >
+      <vs-select-item
+        :key="index"
+        :value="item.id + 1"
+        :text="item.id + 1"
+        v-for="(item, index) in activeElement.scales"
+      />
+    </vs-select>
   </div>
 </template>
 
@@ -24,6 +40,14 @@
 export default {
   name: 'opinion-scale-widget',
   props: ['activeElement'],
+  computed: {
+    numberOfScales: {
+      get() {},
+      set(value) {
+        this.$store.commit('widget/updateNumberOfScales', value);
+      }
+    }
+  },
   methods: {
     updateWidgetData(e, uuid, key) {
       this.$store.commit('widget/updateData', {
