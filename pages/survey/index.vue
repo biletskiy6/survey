@@ -1,46 +1,48 @@
 <template>
-    <div class="survey">
-
+  <div class="survey">
+    <Tabs class="tab-wrapper" orientation="vertical">
+      <Tab class="tab" name="Survey Designer" :selected="true">
         <splitpanes style="height: 100%">
-            <pane size="12" min-size="10">
-                <Toolbar/>
-            </pane>
-            <pane size="68" min-size="10">
-                <Viewport/>
-            </pane>
-            <pane size="20" min-size="10">
-               <Panel/>
-            </pane>
+          <pane size="12" min-size="10">
+            <Toolbar />
+          </pane>
+          <pane size="68" min-size="10">
+            <Viewport />
+          </pane>
+          <pane size="20" min-size="10">
+            <Panel />
+          </pane>
         </splitpanes>
-<!--        <multipane>-->
-<!--            <div class="pane" :style="{ minWidth: '100px', width: '20%', maxWidth: '100%' }">-->
-<!--                <Toolbar/>-->
-<!--            </div>-->
-<!--            <multipane-resizer></multipane-resizer>-->
-<!--            <div >-->
-<!--                <Viewport/>-->
-<!--            </div>-->
-<!--            <multipane-resizer></multipane-resizer>-->
-<!--            <div class="pane" :style="{ flexGrow: 1 }">-->
-<!--                <Panel/>-->
-<!--            </div>-->
-<!--        </multipane>-->
-    </div>
+      </Tab>
+      <Tab name="Test Survey">
+        <TestSurvey />
+      </Tab>
+    </Tabs>
+  </div>
 </template>
 
 <script>
-    import { Splitpanes, Pane } from 'splitpanes';
-    import 'splitpanes/dist/splitpanes.css';
+import { Splitpanes, Pane } from 'splitpanes';
+import { Tabs, Tab } from '@crow1796/vue-bulma-tabs';
 
-    import Toolbar from "@/components/Toolbar";
-    import Viewport from "@/components/Viewport";
-    import Panel from "@/components/Panel";
+import 'splitpanes/dist/splitpanes.css';
 
-    export default {
-        name: "index",
-        components: {
-            Toolbar, Viewport, Panel, Splitpanes, Pane
+import Toolbar from '@/components/Toolbar';
+import Viewport from '@/components/Viewport';
+import Panel from '@/components/Panel';
+import TestSurvey from '@/components/TestSurvey';
 
-        }
-    }
+export default {
+  name: 'index',
+  components: {
+    Toolbar,
+    Viewport,
+    Panel,
+    Splitpanes,
+    Pane,
+    Tabs,
+    Tab,
+    TestSurvey
+  }
+};
 </script>

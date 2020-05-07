@@ -1,7 +1,7 @@
 .widget-single-input {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
   padding-bottom: 20px;
 
   h6 {
@@ -13,13 +13,16 @@
       font-size: 18px;
     }
   }
+
   &:first-child {
-    margin-top: 40px;
+    // margin-top: 40px;
   }
+
   &:last-child {
-    border-bottom: 1px solid #eee;
+    margin-bottom: 0;
   }
 }
+
 .widget-single-input .inputx {
   width: 100%;
 }

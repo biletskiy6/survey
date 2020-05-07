@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-decoupled-document": "^19.0.0",
+    "@crow1796/vue-bulma-tabs": "^1.0.8",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
@@ -23,11 +24,14 @@
     "tiptap": "^1.27.1",
     "tiptap-extensions": "^1.29.1",
     "uuid": "^8.0.0",
+    "v-tooltip": "^2.0.3",
     "vee-validate": "^3.3.0",
+    "vue-acl": "^4.1.10",
     "vue-multipane": "^0.9.5",
     "vue-splitpane": "^1.0.6",
     "vue2-editor": "^2.10.2",
     "vuedraggable": "^2.23.2",
+    "vuelidate": "^0.7.5",
     "vuesax": "3.11.13"
   },
   "devDependencies": {
