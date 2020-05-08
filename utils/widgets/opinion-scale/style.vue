@@ -19,20 +19,20 @@
     />
 
 
-    <vs-select
+<!--    <vs-select-->
 
-      v-model="numberOfScales"
-      class="con-select-example"
-      label="Number of scales"
-      icon="keyboard_arrow_down"
-    >
-      <vs-select-item
-        :key="index"
-        :value="item.id + 1"
-        :text="item.id + 1"
-        v-for="(item, index) in activeElement.scales"
-      />
-    </vs-select>
+<!--      v-model="numberOfScales"-->
+<!--      class="con-select-example"-->
+<!--      label="Number of scales"-->
+<!--      icon="keyboard_arrow_down"-->
+<!--    >-->
+<!--      <vs-select-item-->
+<!--        :key="index"-->
+<!--        :value="item.id + 1"-->
+<!--        :text="item.id + 1"-->
+<!--        v-for="(item, index) in activeElement.scales"-->
+<!--      />-->
+<!--    </vs-select>-->
   </div>
 </template>
 
@@ -42,9 +42,14 @@ export default {
   props: ['activeElement'],
   computed: {
     numberOfScales: {
-      get() {},
+      get() {
+        this.$store.getters['widget/numberOfScales'](this.activeElement.uuid)
+      },
       set(value) {
-        this.$store.commit('widget/updateNumberOfScales', value);
+        this.$store.commit('widget/updateNumberOfScales', {
+          id: this.activeElement.uuid,
+          value
+        });
       }
     }
   },

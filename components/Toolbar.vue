@@ -15,7 +15,7 @@
       >
         <span v-html="item.icon"></span>
         <span class="menu-caption">
-          {{ item.title }}
+          {{ item }}
         </span>
       </li>
     </ul>
@@ -32,7 +32,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.widgets['braid-txt'].data().title);
+    console.log(this.widgets);
   },
   methods: {
     addWidget(e, item) {

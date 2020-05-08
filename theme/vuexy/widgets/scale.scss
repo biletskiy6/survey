@@ -1,0 +1,12 @@
+.scales {
+  .con-vs-radio {
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  .vs-radio--label {
+    order: -1;
+    margin-left: 0;
+  }
+}

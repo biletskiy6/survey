@@ -12,27 +12,27 @@
 </template>
 
 <script>
-import Vue from 'vue';
+
 import WidgetToolbar from '@/components/widgets/WidgetToolbar';
 import panel from './style';
 const WIDGET_NAME = 'braid-txt';
+
+
 export default {
+
+
   name: WIDGET_NAME,
   icon:
     '<svg viewBox="0 0 16 16" id="icon-text"><path d="M2 1v3h1V3h4v10H5v1h6v-1H9V3h4v1h1V1H2z"></path></svg>',
-  title: 'Text',
+  title: 'Title',
   panel,
-  mounted() {
-    // console.log(this.name);
-  },
   data() {
     return {
       title: '',
-      inputText: '',
-
-      isEdited: false
+      txt: 'dsadas'
     };
   },
+
   setting: {
     type: WIDGET_NAME,
     isContainer: false,
@@ -65,7 +65,6 @@ export default {
   },
   methods: {
     handleSelect() {
-      alert(1);
     },
     handleQuestionEdit() {
       this.isEdited = true;

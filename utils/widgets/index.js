@@ -6,7 +6,6 @@ import ranking from './ranking/index';
 import variable from './variable/index';
 import separatorLine from './separator-line/index';
 
-import CKeditor from './ck-text';
 export default {
   [braidText.name]: braidText,
   [multipleChoice.name]: multipleChoice,

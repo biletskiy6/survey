@@ -104,6 +104,17 @@ export const mutations = {
     const widget = state.widgets.find(w => w.uuid === id);
     widget.slider[key] = Number(value);
   },
+  updateNumberOfScales(state, { id, value }) {
+    const widget = state.widgets.find(w => w.uuid === id);
+    widget.scaleNumber = value;
+  },
+  updateScaleNumberCount(state, { id, value }) {
+    let { scales } = state.widgets.find(w => w.uuid === id);
+    let items = scales.slice(0, value);
+    // let intersection = scales.filter(x => items.includes(x));
+    // state.activeElement.scales = intersection;
+
+  },
   // updateSliderStepValue(state, { id, value }) {
   //   const widget = state.widgets.find(w => w.uuid === id);
   //   widget.slider.step = value;
@@ -197,6 +208,10 @@ export const getters = {
     const widget = state.widgets.find(w => w.uuid === widgetUuid);
     if (!widget) return 1;
     return widget.slider ? widget.slider.value : 1;
+  },
+  numberOfScales: state => widgetUuid => {
+    const widget = state.widgets.find(w => w.uuid === widgetUuid);
+    if (!widget) return 1;
   },
   uuid: state => state.uuid
 };
