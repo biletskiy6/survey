@@ -11,12 +11,13 @@
         class="widget-list d-flex fd-c item"
         :class="{ active: id === val.uuid }"
         :key="val.uuid"
-        v-for="val in widgetStore"
+        v-for="(val, index) in widgetStore"
       >
         <WidgetToolbar :widgetUuid="val.uuid" />
         <component
           class="widget"
           :is="val.type"
+          :widgetIdx="index"
           :val="val"
           :readonly="true"
           :data-uuid="val.uuid"
@@ -26,7 +27,7 @@
 
     <div class="survey-viewport-empty" v-else>
       <div class="survey-viewport-empty-content">
-        <h3>Please drop a question here from the Toolbox.</h3>
+        <h3>Please choose a question from the Toolbar.</h3>
         <img :src="require(`~/assets/icons/cloud.svg`)" />
       </div>
     </div>

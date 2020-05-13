@@ -1,7 +1,5 @@
 <template>
   <div class="survey-panel">
-    <h4>Properties</h4>
-    <vs-divider />
     <widget-appearence :active-element="activeElement" />
   </div>
 </template>

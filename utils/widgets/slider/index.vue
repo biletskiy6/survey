@@ -1,8 +1,10 @@
 <template>
   <div class="widget-single-input">
-    <h6>{{ val.questionTitle }}</h6>
+    <div class="mb-1">
+      <h4 class="fw-b"> {{ widgetIdx + 1 }}.  {{ val.questionTitle }}</h4>
+      <p>{{ val.questionDescription }}</p>
+    </div>
 
-    <p>{{ val.questionDescription }}</p>
 
     <div>
       <vs-slider
@@ -24,7 +26,7 @@ const WIDGET_NAME = 'slider';
 export default {
   name: WIDGET_NAME,
   icon:
-    '<svg viewBox="0 0 16 16" id="icon-text"><path d="M2 1v3h1V3h4v10H5v1h6v-1H9V3h4v1h1V1H2z"></path></svg>',
+    '<svg viewBox="0 0 16 16" id="icon-rating"><path d="M0 7h1l1-1v5h1V5H2L0 7zm5 5h5V4H5v8zm1-5h2V6H6V5h3v3H7v2h2v1H6V7zm6-2v1h2v1h-2v1h2v2h-2v1h3V5h-3z"></path></svg>',
   title: 'Slider',
   panel,
   mounted() {
@@ -75,7 +77,7 @@ export default {
     animationName: ''
   },
   // Attribute Meaning Reference widgets/pic/index.vue
-  props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid'],
+  props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid',     'widgetIdx',],
   components: {
     WidgetToolbar
   },

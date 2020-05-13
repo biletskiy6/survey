@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h5 class="fw-b tac">Basic settings</h5>
+    <vs-divider/>
     <input
       class="custom-input mb-1"
       type="text"
@@ -16,6 +18,10 @@
         updateWidgetData($event, activeElement.uuid, 'questionDescription')
       "
     />
+
+
+    <h5 class="fw-b tac">Advanced settings</h5>
+    <vs-divider/>
 
     <draggable
       v-model="multipleChoiceRows"
@@ -41,7 +47,8 @@
           /> -->
         <input
           class="custom-input mb1"
-          @input="updateMultipleChoiseQuestionRows($event, row.id)"
+          placeholder="Question text"
+          @input="updateMultipleChoiceQuestionRow($event, row.id)"
           :value="row.value"
           type="text"
         />
@@ -54,33 +61,37 @@
       </div>
     </draggable>
 
-    <vs-button
-      size="small"
-      @click="handleAddQuestionRow"
-      color="primary"
-      type="gradient"
-      >Add row</vs-button
-    >
+    <div class="d-flex ai-c">
+      <vs-button @click="handleAddQuestionRow" color="primary" type="line"
+                 icon="add"></vs-button>
+    </div>
 
     <vs-divider />
-    <vs-checkbox @input="updateTextareaVisibility($event)"
+    <vs-checkbox class="mb-2" @input="updateTextareaVisibility($event)"
       >Additional text box</vs-checkbox
     >
 
-    <vs-select
-      v-if="activeElement.textarea.isVisible"
-      v-model="textareaWidgetWidth"
-      class="con-select-example"
-      label="Textarea size"
-      icon="keyboard_arrow_down"
-    >
-      <vs-select-item
-        :key="index"
-        :value="item.value"
-        :text="item.text"
-        v-for="(item, index) in activeElement.textarea.widthOptions"
-      />
-    </vs-select>
+
+
+    <v-select placeholder="Choose textarea width" v-model="textareaWidgetWidth" :options="activeElement.textarea.widthOptions" v-if="activeElement.textarea.isVisible">
+
+    </v-select>
+
+
+<!--    <vs-select-->
+<!--      v-if="activeElement.textarea.isVisible"-->
+<!--      v-model="textareaWidgetWidth"-->
+<!--      class="con-select-example"-->
+<!--      label="Textarea size"-->
+<!--      icon="keyboard_arrow_down"-->
+<!--    >-->
+<!--      <vs-select-item-->
+<!--        :key="index"-->
+<!--        :value="item.value"-->
+<!--        :text="item.text"-->
+<!--        v-for="(item, index) in activeElement.textarea.widthOptions"-->
+<!--      />-->
+<!--    </vs-select>-->
   </div>
 </template>
 
@@ -96,7 +107,9 @@ export default {
     textareaWidgetWidth: {
       get() {},
       set(value) {
-        this.$store.commit('widget/updateTextareaWidgetWidth', value);
+        if(value) {
+          this.$store.commit('widget/updateTextareaWidgetWidth', value.value);
+        }
       }
     },
     multipleChoiceRows: {
@@ -115,8 +128,8 @@ export default {
     updateMultipleChoiceCheckedRow(id) {
       this.$store.commit('widget/updateMultipleChoiceCheckedRow', id);
     },
-    updateMultipleChoiseQuestionRows(e, id) {
-      this.$store.commit('widget/updateMultipleChoiseQuestionRows', {
+    updateMultipleChoiceQuestionRow(e, id) {
+      this.$store.commit('widget/updateMultipleChoiceQuestionRow', {
         id,
         value: e.target.value
       });

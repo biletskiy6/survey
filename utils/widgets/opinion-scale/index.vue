@@ -1,8 +1,10 @@
 <template>
   <div class="widget-multiple-choice">
-    <h6>{{ val.questionTitle }}</h6>
+    <div class="mb-1">
+      <h4 class="fw-b"> {{ widgetIdx + 1 }}.  {{ val.questionTitle }}</h4>
+      <p>{{ val.questionDescription }}</p>
+    </div>
 
-    <p>{{ val.questionDescription }}</p>
 
     <div class="scales d-flex">
       <vs-radio
@@ -72,7 +74,7 @@
       belong: 'page'
     },
     // Attribute Meaning Reference widgets/pic/index.vue
-    props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid'],
+    props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid',     'widgetIdx'],
     components: {
       WidgetToolbar
     },

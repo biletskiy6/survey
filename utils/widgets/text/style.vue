@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h5 class="fw-b tac">Basic settings</h5>
+    <vs-divider/>
     <input
       class="custom-input mb-1"
       type="text"

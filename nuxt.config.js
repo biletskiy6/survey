@@ -27,6 +27,7 @@ export default {
    */
   css: [
     'vuesax/dist/vuesax.css',
+    'vue-select/dist/vue-select.css',
     'material-icons/iconfont/material-icons.css',
     '@/theme/index.scss'
   ],
@@ -38,7 +39,8 @@ export default {
     '@/plugins/vee-validate',
     '@/plugins/tooltips',
     '@/plugins/vuelidate',
-    '@/plugins/acl'
+    '@/plugins/acl',
+    '@/plugins/vue-select',
   ],
   /*
    ** Nuxt.js dev-modules

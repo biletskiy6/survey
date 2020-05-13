@@ -4,12 +4,13 @@
       <div
         class="widget-list d-flex fd-c item"
         :key="val.uuid"
-        v-for="val in widgetStore"
+        v-for="(val, index) in widgetStore"
       >
         <component
           class="widget"
           :is="val.type"
           :val="val"
+          :widgetIdx="index"
           :formData="formData"
           :readonly="false"
           :data-uuid="val.uuid"

@@ -1,12 +1,12 @@
 <template>
   <div class="survey-toolbar">
-    <h4>Toolbar</h4>
+    <h4 class="fw-b">Toolbar</h4>
     <vs-divider />
     <ul class="widget-list columns">
       <li
         v-for="item in widgets"
         :key="item.name"
-        class="widget-list-item column col-6"
+        class="widget-list-item column col-6 fw-m"
         @click="
           e => {
             addWidget(e, item);
@@ -15,7 +15,7 @@
       >
         <span v-html="item.icon"></span>
         <span class="menu-caption">
-          {{ item }}
+          {{ item.title }}
         </span>
       </li>
     </ul>

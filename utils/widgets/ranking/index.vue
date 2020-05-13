@@ -1,8 +1,9 @@
 <template>
   <div class="widget-single-input">
-    <h6>{{ val.questionTitle }}</h6>
-
-    <p>{{ val.questionDescription }}</p>
+    <div class="mb-1">
+      <h4 class="fw-b"> {{ widgetIdx + 1 }}.  {{ val.questionTitle }}</h4>
+      <p>{{ val.questionDescription }}</p>
+    </div>
 
     <draggable v-model="rankingRows" draggable=".item" handle=".btn-drag">
       <div
@@ -39,7 +40,7 @@ const WIDGET_NAME = 'ranking';
 export default {
   name: WIDGET_NAME,
   icon:
-    '<svg viewBox="0 0 16 16" id="icon-text"><path d="M2 1v3h1V3h4v10H5v1h6v-1H9V3h4v1h1V1H2z"></path></svg>',
+    '<svg viewBox="0 0 16 16" id="icon-radiogroup"><path d="M3 1C1.3 1 0 2.3 0 4s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm0 4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0 4c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm0 4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zM8 3v2h8V3H8zm0 10h8v-2H8v2z"></path></svg>',
   title: 'Ranking',
   panel,
   computed: {
@@ -84,7 +85,7 @@ export default {
     animationName: ''
   },
   // Attribute Meaning Reference widgets/pic/index.vue
-  props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid'],
+  props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid',     'widgetIdx',],
   components: {
     WidgetToolbar,
     draggable

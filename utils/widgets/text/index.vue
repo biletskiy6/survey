@@ -1,8 +1,10 @@
 <template>
   <div class="widget-single-input">
-    <h6>{{ val.questionTitle }}</h6>
+    <div class="mb-1">
 
-    <p>{{ val.questionDescription }}</p>
+      <h4 class="fw-b"> {{ widgetIdx + 1 }}.  {{ val.questionTitle }}</h4>
+      <p>{{ val.questionDescription }}</p>
+    </div>
 
     <vs-input
       :readonly="readonly"
@@ -17,36 +19,27 @@ import WidgetToolbar from '@/components/widgets/WidgetToolbar';
 import panel from './style';
 const WIDGET_NAME = 'braid-txt';
 
-
 export default {
-
-
   name: WIDGET_NAME,
   icon:
     '<svg viewBox="0 0 16 16" id="icon-text"><path d="M2 1v3h1V3h4v10H5v1h6v-1H9V3h4v1h1V1H2z"></path></svg>',
-  title: 'Title',
+  title: 'Text',
   panel,
   data() {
     return {
       title: '',
-      txt: 'dsadas'
+      txt: ''
     };
   },
 
   setting: {
     type: WIDGET_NAME,
     isContainer: false,
-    isUpload: false,
-    hasGuide: true,
     isChild: true,
-    dragable: true,
-    resizable: true,
     text: 'Paste your text here',
     questionTitle: 'Question Title',
     questionDescription: '',
-    href: '',
     belong: 'page',
-    animationName: ''
   },
   // Attribute Meaning Reference widgets/pic/index.vue
   props: [
@@ -58,7 +51,8 @@ export default {
     'index',
     'uuid',
     'readonly',
-    'formData'
+    'formData',
+    'widgetIdx',
   ],
   components: {
     WidgetToolbar

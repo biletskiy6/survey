@@ -28,6 +28,7 @@
     "vee-validate": "^3.3.0",
     "vue-acl": "^4.1.10",
     "vue-multipane": "^0.9.5",
+    "vue-select": "^3.10.3",
     "vue-splitpane": "^1.0.6",
     "vue2-editor": "^2.10.2",
     "vuedraggable": "^2.23.2",

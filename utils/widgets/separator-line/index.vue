@@ -14,7 +14,7 @@ const WIDGET_NAME = 'separator-line';
 export default {
   name: WIDGET_NAME,
   icon:
-    '<svg viewBox="0 0 16 16" id="icon-text"><path d="M2 1v3h1V3h4v10H5v1h6v-1H9V3h4v1h1V1H2z"></path></svg>',
+    '<svg viewBox="0 0 16 16" id="icon-html"><path d="M4 4L0 8l4 4 1-1-3-3 3-3zM11 4l-1 1 3 3-3 3 1 1 4-4z"></path></svg>',
   title: 'Separator Line',
   panel,
   mounted() {

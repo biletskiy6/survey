@@ -1,8 +1,9 @@
 <template>
   <div class="widget-multiple-choise">
-    <h6>{{ val.questionTitle }}</h6>
-
-    <p>{{ val.questionDescription }}</p>
+   <div class="mb-1">
+     <h4 class="fw-b"> {{ widgetIdx + 1 }}.  {{ val.questionTitle }}</h4>
+     <p>{{ val.questionDescription }}</p>
+   </div>
 
     <div
       class="multiple-choice-row mb-1"
@@ -15,7 +16,7 @@
         class="custom-input"
         placeholder="Question text"
         :data-uuid="row.id"
-        @input="updateMultipleChoiseQuestionRows($event, val.uuid, row.id)"
+        @input="updateMultipleChoiseQuestionRow($event, val.uuid, row.id)"
         :value="row.value"
         type="text"
       />
@@ -46,19 +47,20 @@ export default {
 
   setting: {
     type: WIDGET_NAME,
+    typeTitle: 'multiple choice',
     isContainer: false,
     isChild: true,
     resizable: true,
-    questionTitle: '',
+    questionTitle: 'Question Title',
     questionDescription: '',
     textarea: {
       isVisible: false,
       width: '100%',
       widthOptions: [
-        { text: 'Size: 25%', value: '25%' },
-        { text: 'Size: 50%', value: '50%' },
-        { text: 'Size: 75%', value: '75%' },
-        { text: 'Size: 100%', value: '100%' }
+        { label: 'Size: 25%', value: '25%' },
+        { label: 'Size: 50%', value: '50%' },
+        { label: 'Size: 75%', value: '75%' },
+        { label: 'Size: 100%', value: '100%' }
       ],
       text: ''
     },
@@ -80,7 +82,8 @@ export default {
     'index',
     'uuid',
     'readonly',
-    'formData'
+    'formData',
+    'widgetIdx',
   ],
   components: {
     WidgetToolbar

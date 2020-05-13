@@ -1,28 +1,64 @@
 <template>
   <div class="widget-single-input">
-    varialbe
+    <h6>{{ val.questionTitle }}</h6>
+    <p>{{ val.questionDescription }}</p>
+
+    <div :key="opt.id" v-for="opt in val.variableOptions" class="variable-options mb-2">
+     <div>
+       <h4>{{ opt.label }}</h4>
+
+
+
+       <div v-show="opt.selectedVariableOption === 'textbox'" class="variable-textbox">
+         <input class="custom-input"/>
+       </div>
+
+
+
+       <div v-show="opt.selectedVariableOption === 'dnd-numbers'" class="variable-dnd-numbers">
+         <v-select placeholder="Choose the answer" :options="getVarNumberOptions(opt.id)"></v-select>
+       </div>
+
+       <div v-show="opt.selectedVariableOption === 'dnd-text'" class="variable-dnd-text">
+         <v-select placeholder="Choose the answer" :options="getVarTextOptions(opt.id)"></v-select>
+
+       </div>
+       <div v-show="opt.selectedVariableOption === 'single-answer'" class="variable-single-answer">
+
+           <vs-radio :key="radioOption.id" v-for="radioOption in opt.variableRadioOptions" vs-name="radios1" vs-value="luis"> {{ radioOption.value }} </vs-radio>
+       </div>
+       <div v-show="opt.selectedVariableOption === 'multiple-answer'" class="variable-multiple-answer">
+         <vs-checkbox :key="checkboxOption.id" v-for="checkboxOption in opt.variableCheckboxOptions"> {{ checkboxOption.value }} </vs-checkbox>
+       </div>
+     </div>
+    </div>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
+import { v4 as uuidv4 } from 'uuid';
 import WidgetToolbar from '@/components/widgets/WidgetToolbar';
 import panel from './style';
 const WIDGET_NAME = 'variable';
 export default {
   name: WIDGET_NAME,
   icon:
-    '<svg viewBox="0 0 16 16" id="icon-text"><path d="M2 1v3h1V3h4v10H5v1h6v-1H9V3h4v1h1V1H2z"></path></svg>',
+    '<svg viewBox="0 0 16 16" id="icon-boolean"><path d="M0 16h10V6H0v10zm2-6l2 2 4-4 1 1-5 5-3-3 1-1z"></path><path d="M5 1v4h1V2h8v8h-3v1h4V1z"></path></svg>',
   title: 'Variable',
   panel,
   mounted() {
     // console.log(this.name);
   },
+
+
+
+
   data() {
     return {
       title: '',
       inputText: '',
-
+      selectDndText: null,
       isEdited: false
     };
   },
@@ -39,14 +75,47 @@ export default {
     questionDescription: '',
     href: '',
     belong: 'page',
-    animationName: ''
+    animationName: '',
+    selectedVariableOption: 'textarea',
+    variableOptions: [
+      {
+        id: uuidv4(),
+        label: "Test",
+        selectedVariableOption: null,
+        varMinNumber: 1,
+        varMaxNumber: 10,
+        variableSelectOptions: [
+          { id: uuidv4(), label: "", value: "" },
+        ],
+        variableRadioOptions: [
+          { id: uuidv4(), label: "", value: "" },
+        ],
+        variableCheckboxOptions: [
+          { id: uuidv4(), label: "", value: "" },
+        ]
+      }
+    ],
   },
   // Attribute Meaning Reference widgets/pic/index.vue
-  props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid'],
+  props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid', 'widgetIdx'],
   components: {
     WidgetToolbar
   },
   methods: {
+    getVarTextOptions(id) {
+      const element = this.val.variableOptions.find((el) => el.id === id);
+      return element.variableSelectOptions;
+    },
+    getVarNumberOptions(id) {
+      const element = this.val.variableOptions.find((el) => el.id === id);
+      let numbers = [];
+
+      for(let i = element.varMinNumber; i <= element.varMaxNumber; i++) {
+        numbers.push(i);
+      }
+
+      return numbers;
+    },
     handleQuestionEdit() {
       this.isEdited = true;
     },
