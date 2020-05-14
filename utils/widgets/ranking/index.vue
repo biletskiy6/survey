@@ -1,7 +1,7 @@
 <template>
   <div class="widget-single-input">
     <div class="mb-1">
-      <h4 class="fw-b"> {{ widgetIdx + 1 }}. {{ val.questionTitle }}</h4>
+      <h4 class="fw-b">{{ val.questionTitle }}</h4>
       <p>{{ val.questionDescription }}</p>
     </div>
 

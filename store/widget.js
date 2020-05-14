@@ -3,20 +3,30 @@ import {v4 as uuidv4} from 'uuid';
 export const state = () => ({
   uuid: null,
   widgets: [],
-  activeElement: {}
+  activeElement: {},
+  iterator: 1,
 });
+
 
 export const mutations = {
   add(state, {item}) {
+
+
     let itemData = item.data ? item.data() : null;
-    let counter = state.widgets.length;
-    let def = {uuid: uuidv4(), counter};
+    let def = {uuid: uuidv4(), counter: state.iterator};
     let setting = JSON.parse(JSON.stringify(item.setting));
     state.widgets.push(Object.assign(setting, def, itemData));
     state.activeElement = state.widgets.find(
       w => w.uuid === state.widgets[state.widgets.length - 1].uuid
     );
     state.uuid = state.widgets[state.widgets.length - 1].uuid;
+
+
+    console.log(item);
+
+    if(item.name !== 'separator-line' && item.name !== 'text-editor') {
+      state.iterator++;
+    }
 
     // this.$commit('select', {
     //   uuid: state.widgets[state.widgets.length - 1].uuid

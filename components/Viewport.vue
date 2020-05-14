@@ -16,6 +16,7 @@
         :key="val.uuid"
         v-for="(val, index) in widgetStore"
       >
+        {{ val }}
         <WidgetToolbar :widgetUuid="val.uuid"/>
         <component
           class="widget"
