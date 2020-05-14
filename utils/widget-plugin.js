@@ -12,7 +12,6 @@ const install = (Vue, config = {}) => {
   if (install.installed) return
 
 
-
   widgets = Object.assign({}, {}, {
     ...AppWidgets,
   });

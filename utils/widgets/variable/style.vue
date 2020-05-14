@@ -1,28 +1,11 @@
 <template>
   <div>
-    <h5 class="fw-b tac">Basic settings</h5>
-    <vs-divider/>
-    <input
-      class="custom-input mb-1"
-      type="text"
-      :value="activeElement.questionTitle"
-      placeholder="Question title"
-      v-on:input="updateWidgetData($event, activeElement.uuid, 'questionTitle')"
-    />
-
-    <input
-      class="custom-input"
-      type="text"
-      placeholder="Question description"
-      :value="activeElement.questionDescription"
-      v-on:input="
-        updateWidgetData($event, activeElement.uuid, 'questionDescription')
-      "
-    />
+    <BaseSettings :activeElement="activeElement"/>
 
     <vs-divider/>
     <h5 class="fw-b tac">Advanced settings</h5>
     <vs-divider/>
+
 
     <div class="variable-options">
       <div class="mb-2" :key="opt.id" v-for="(opt, index) in activeElement.variableOptions">
@@ -55,11 +38,17 @@
           </div>
 
           <div v-if="opt.selectedVariableOption === 'dnd-numbers'">
+            <vs-input-number label="Min:" @change="handleVarValue($event, opt.id, 'varMinNumber')"
+                             :value="getVarValue(opt.id, 'varMinNumber')"/>
 
-            <input @change="handleVarValue($event, opt.id, 'varMinNumber')" :value="getVarValue(opt.id, 'varMinNumber')"
-                   type="number">
-            <input @change="handleVarValue($event, opt.id, 'varMaxNumber')" :value="getVarValue(opt.id, 'varMaxNumber')"
-                   type="number">
+
+            <vs-input-number label="Max:" @change="handleVarValue($event, opt.id, 'varMaxNumber')"
+                             :value="getVarValue(opt.id, 'varMaxNumber')"/>
+
+            <!--            <input @change="handleVarValue($event, opt.id, 'varMinNumber')" :value="getVarValue(opt.id, 'varMinNumber')"-->
+            <!--                   type="number">-->
+            <!--            <input @change="handleVarValue($event, opt.id, 'varMaxNumber')" :value="getVarValue(opt.id, 'varMaxNumber')"-->
+            <!--                   type="number">-->
           </div>
 
 
@@ -110,8 +99,10 @@
               </div>
             </div>
             <vs-divider/>
-            <div class="mb-1" :key="variableCheckboxOption.id" v-for="variableCheckboxOption in opt.variableCheckboxOptions">
-              <input @input="handleVarCheckboxText($event, opt.id, variableCheckboxOption.id)" placeholder="Enter Checkbox Text"
+            <div class="mb-1" :key="variableCheckboxOption.id"
+                 v-for="variableCheckboxOption in opt.variableCheckboxOptions">
+              <input @input="handleVarCheckboxText($event, opt.id, variableCheckboxOption.id)"
+                     placeholder="Enter Checkbox Text"
                      class="custom-input" type="text">
             </div>
           </div>
@@ -127,6 +118,7 @@
 
 <script>
   import InputNumber from "@/components/input-number/InputNumber";
+  import BaseSettings from "@/components/widgets/BaseSettings";
 
   export default {
     name: 'variable-style',
@@ -134,15 +126,16 @@
     computed: {
       varMinValue: {
         get(e) {
-          return this.$store.getters['widget/getVarMinValue'](
-            this.activeElement.uuid
-          );
+          return 3;
+          // return this.$store.getters['widget/getVarMinValue'](
+          //   this.activeElement.uuid
+          // );
         },
         set(value) {
+          console.log(value);
           this.$store.commit('widget/updateVarMinValue', {
             id: this.activeElement.uuid,
             value: value,
-
           });
         }
       },
@@ -266,6 +259,7 @@
       }
     },
     components: {
+      BaseSettings,
       InputNumber
     }
 

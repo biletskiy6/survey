@@ -18,9 +18,17 @@
       >{{ scale.id }}
       </vs-radio
       >
-
-      {{ val.scaleNumber }}
     </div>
+
+    <div>
+      <vs-textarea
+        :readonly="readonly"
+        :width="val.textarea.width"
+        v-show="val.textarea.isVisible"
+      />
+    </div>
+
+
   </div>
 </template>
 
@@ -69,12 +77,21 @@
         {id: 19, isChecked: false, isVisible: true},
 
       ],
-      isChild: true,
-      resizable: true,
+      textarea: {
+        isVisible: false,
+        width: '100%',
+        widthOptions: [
+          { label: 'Size: 25%', value: '25%' },
+          { label: 'Size: 50%', value: '50%' },
+          { label: 'Size: 75%', value: '75%' },
+          { label: 'Size: 100%', value: '100%' }
+        ],
+        text: ''
+      },
       belong: 'page'
     },
     // Attribute Meaning Reference widgets/pic/index.vue
-    props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid',     'widgetIdx'],
+    props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid', 'widgetIdx', 'readonly'],
     components: {
       WidgetToolbar
     },

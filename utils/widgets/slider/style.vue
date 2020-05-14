@@ -1,23 +1,8 @@
 <template>
   <div>
-    <input
-      class="custom-input mb-1"
-      type="text"
-      :value="activeElement.questionTitle"
-      placeholder="Question title"
-      v-on:input="updateWidgetData($event, activeElement.uuid, 'questionTitle')"
-    />
+    <BaseSettings :activeElement="activeElement" />
 
-    <input
-      class="custom-input mb-1"
-      placeholder="Question description"
-      type="text"
-      :value="activeElement.questionDescription"
-      v-on:input="
-        updateWidgetData($event, activeElement.uuid, 'questionDescription')
-      "
-    />
-    <!--        <vs-input class="inputx" placeholder="Placeholder" v-model=""/>-->
+    <vs-divider/>
 
     <vs-input-number label="Min:" v-model="minValue" />
     <vs-input-number label="Max:" v-model="maxValue" />
@@ -26,8 +11,10 @@
 </template>
 
 <script>
+import BaseSettings from "@/components/widgets/BaseSettings";
 export default {
   name: 'slider-style',
+  components: {BaseSettings},
   props: ['activeElement'],
   filters: {
     toFixed: function(data) {

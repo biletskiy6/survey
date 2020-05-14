@@ -1,23 +1,9 @@
 <template>
   <div>
-    <input
-      class="custom-input mb-1"
-      type="text"
-      :value="activeElement.questionTitle"
-      placeholder="Question title"
-      v-on:input="updateWidgetData($event, activeElement.uuid, 'questionTitle')"
-    />
+    <BaseSettings :activeElement="activeElement" />
 
-    <input
-      class="custom-input"
-      type="text"
-      placeholder="Question description"
-      :value="activeElement.questionDescription"
-      v-on:input="
-        updateWidgetData($event, activeElement.uuid, 'questionDescription')
-      "
-    />
-
+    <vs-divider/>
+    <h5 class="fw-b tac">Advanced settings</h5>
     <vs-divider/>
 
 
@@ -36,43 +22,45 @@
 </template>
 
 <script>
-export default {
-  name: 'ranking-style',
-  props: ['activeElement'],
-  filters: {
-    toFixed: function(data) {
-      return data.toFixed(1);
-    }
-  },
-  computed: {
-    rankingRows: {
-      get() {
-        return this.$store.getters['widget/rankingRows'];
-      },
-      set(value) {
-        this.$store.commit('widget/updateRankingRows', value);
+  import BaseSettings from "@/components/widgets/BaseSettings";
+  export default {
+    name: 'ranking-style',
+    components: {BaseSettings},
+    props: ['activeElement'],
+    filters: {
+      toFixed: function (data) {
+        return data.toFixed(1);
       }
-    }
-  },
-  methods: {
-    updateWidgetData(e, uuid, key) {
-      this.$store.commit('widget/updateData', {
-        uuid,
-        value: e.target.value,
-        key: [key]
-      });
     },
-    updateRankingRow(e, id) {
-      this.$store.commit('widget/updateRankingRow', {
-        id,
-        value: e.target.value
-      });
+    computed: {
+      rankingRows: {
+        get() {
+          return this.$store.getters['widget/rankingRows'];
+        },
+        set(value) {
+          this.$store.commit('widget/updateRankingRows', value);
+        }
+      }
+    },
+    methods: {
+      updateWidgetData(e, uuid, key) {
+        this.$store.commit('widget/updateData', {
+          uuid,
+          value: e.target.value,
+          key: [key]
+        });
+      },
+      updateRankingRow(e, id) {
+        this.$store.commit('widget/updateRankingRow', {
+          id,
+          value: e.target.value
+        });
+      }
+    },
+    mounted() {
+      // setTimeout(() => {
+      //   this.$store.commit("widget/updateWidgetText", "Updated string");
+      // }, 1500);
     }
-  },
-  mounted() {
-    // setTimeout(() => {
-    //   this.$store.commit("widget/updateWidgetText", "Updated string");
-    // }, 1500);
-  }
-};
+  };
 </script>

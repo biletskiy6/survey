@@ -96,11 +96,11 @@
       border-radius: 50px;
       box-shadow: 1px 1px 7px rgba(188, 209, 247, 0.8);
       font-size: 16px;
-      border: none;
       padding: 15px 20px;
       display: block;
       text-indent: 60px;
       width: 100%;
+      font-family: $font-family-sans-serif;
       border: 1px solid #eee;
 
       @include placeholder {

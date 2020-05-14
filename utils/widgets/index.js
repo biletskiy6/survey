@@ -5,6 +5,8 @@ import slider from './slider/index';
 import ranking from './ranking/index';
 import variable from './variable/index';
 import separatorLine from './separator-line/index';
+import textEditor from './text-editor/index';
+// import CKeditor from './ck-text';
 
 export default {
   [braidText.name]: braidText,
@@ -13,7 +15,6 @@ export default {
   [slider.name]: slider,
   [ranking.name]: ranking,
   [variable.name]: variable,
-  [separatorLine.name]: separatorLine
-
-  // [CKeditor.name]: CKeditor,
+  [separatorLine.name]: separatorLine,
+  [textEditor.name]: textEditor
 };

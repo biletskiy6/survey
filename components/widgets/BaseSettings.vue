@@ -1,0 +1,44 @@
+<template>
+  <div>
+    <h5 class="fw-b tac">Basic settings</h5>
+    <vs-divider/>
+
+    <input
+      class="custom-input mb-1"
+      type="text"
+      :value="activeElement.questionTitle"
+      placeholder="Question title"
+      v-on:input="updateWidgetData($event, activeElement.uuid, 'questionTitle')"
+    />
+
+    <input
+      class="custom-input"
+      type="text"
+      placeholder="Question description"
+      :value="activeElement.questionDescription"
+      v-on:input="
+        updateWidgetData($event, activeElement.uuid, 'questionDescription')
+      "
+    />
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "BaseSettings",
+    props: ['activeElement'],
+    methods: {
+      updateWidgetData(e, uuid, key) {
+        this.$store.commit('widget/updateData', {
+          uuid,
+          value: e.target.value,
+          key: [key]
+        });
+      }
+    },
+  }
+</script>
+
+<style scoped>
+
+</style>

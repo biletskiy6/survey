@@ -16,7 +16,10 @@ export default {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap' }
+      ]
   },
   /*
    ** Customize the progress-bar color
@@ -29,6 +32,9 @@ export default {
     'vuesax/dist/vuesax.css',
     'vue-select/dist/vue-select.css',
     'material-icons/iconfont/material-icons.css',
+    'quill/dist/quill.snow.css',
+    'quill/dist/quill.bubble.css',
+    'quill/dist/quill.core.css',
     '@/theme/index.scss'
   ],
   /*
@@ -41,6 +47,8 @@ export default {
     '@/plugins/vuelidate',
     '@/plugins/acl',
     '@/plugins/vue-select',
+    '@/plugins/perfect-scrollbar',
+    { src: "@/plugins/vue-quill-editor.js", ssr: false },
   ],
   /*
    ** Nuxt.js dev-modules

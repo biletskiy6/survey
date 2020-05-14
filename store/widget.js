@@ -9,7 +9,6 @@ export const state = () => ({
 export const mutations = {
   add(state, {item}) {
     let itemData = item.data ? item.data() : null;
-
     let counter = state.widgets.length;
     let def = {uuid: uuidv4(), counter};
     let setting = JSON.parse(JSON.stringify(item.setting));
@@ -53,19 +52,19 @@ export const mutations = {
 
     state.widgets.push({...copied, uuid: uuidv4()});
   },
-
-  updateWidgets(state, newArray) {
-    state.widgets = newArray;
+  updateWidgets(state, widgets) {
+    state.widgets = widgets;
   },
   select(state, {uuid}) {
     state.uuid = uuid;
-    console.log(state.widgets, uuid);
     state.activeElement = state.widgets.find(w => w.uuid === uuid);
   },
   updateData(state, data) {
     let widget = state.widgets.find(w => w.uuid === data.uuid);
     widget[data.key] = data.value;
   },
+
+
 
   // ======================================================================================
   // Multiple Choice
@@ -93,7 +92,7 @@ export const mutations = {
 
   // ======================================================================================
   // Opinion Scale
-
+  // ======================================================================================
   // updateNumberOfScales(state, {id, value}) {
   //   const widget = state.widgets.find(w => w.uuid === id);
   //   widget.scaleNumber = value;
@@ -109,7 +108,7 @@ export const mutations = {
   // Slider
   // ======================================================================================
 
-  // ======================================================================================
+
   updateSliderValue(state, {id, value, key}) {
     const widget = state.widgets.find(w => w.uuid === id);
     if (widget.slider[key]) {
@@ -119,7 +118,7 @@ export const mutations = {
 
 
   // ======================================================================================
-  // Ranking rows
+  // Ranking
   // ======================================================================================
 
   updateRankingRows(state, value) {
@@ -143,19 +142,6 @@ export const mutations = {
   // Variable rows
   // ======================================================================================
 
-  setSelectedVariableOption(state, {rowUuid, value}) {
-
-    const elementIndexToUpdate = state.activeElement.variableOptions.findIndex(
-      row => row.id === rowUuid
-    );
-    state.activeElement.variableOptions[elementIndexToUpdate].selectedVariableOption = value;
-    //
-    // const widget = state.widgets.find(w => w.uuid === widgetUuid);
-    // if (widget.selectedVariableOption) {
-    //   widget.selectedVariableOption = value;
-    // }
-  },
-
   addVariableOption(state, widgetUuid) {
     const widget = state.widgets.find(w => w.uuid === widgetUuid);
     if (widget.variableOptions) {
@@ -165,21 +151,37 @@ export const mutations = {
         selectedVariableOption: '',
         varMinNumber: 1,
         varMaxNumber: 10,
-        variableSelectOptions: [{id: uuidv4(), label: "", value: ""},],
-        variableRadioOptions: [{id: uuidv4(), label: "", value: ""},],
-        variableCheckboxOptions: [{id: uuidv4(), label: "", value: ""},],
+        variableSelectOptions: [{id: uuidv4(), label: "", value: ""}],
+        variableRadioOptions: [{id: uuidv4(), label: "", value: ""}],
+        variableCheckboxOptions: [{id: uuidv4(), label: "", value: ""}],
       })
     }
   },
 
+  setSelectedVariableOption(state, {rowUuid, value}) {
+    const elementIndexToUpdate = state.activeElement.variableOptions.findIndex(
+      row => row.id === rowUuid
+    );
+
+    const element = state.activeElement.variableOptions[elementIndexToUpdate];
+
+    if (element) {
+      element.selectedVariableOption = value;
+    }
+
+  },
 
   updateVarMinValue(state, {id, value}) {
     const widget = state.widgets.find(w => w.uuid === id);
-    widget.varMinNumber = value;
+    if (widget.varMinNumber) {
+      widget.varMinNumber = value;
+    }
   },
   updateVarMaxValue(state, {id, value}) {
     const widget = state.widgets.find(w => w.uuid === id);
-    widget.varMaxNumber = value;
+    if (widget.varMaxNumber) {
+      widget.varMaxNumber = value;
+    }
   },
   updateVarValue(state, {id, value, key}) {
     const elementIndexToUpdate = state.activeElement.variableOptions.findIndex(
@@ -210,6 +212,7 @@ export const mutations = {
     variableOptionElement.variableSelectOptions.pop();
   },
 
+
   updateVarRadioText(state, {value, variableOptionId, variableRadioOptionId}) {
     const variableOptionElement = state.activeElement.variableOptions.find(row => row.id === variableOptionId);
     const variableRadioOption = variableOptionElement.variableRadioOptions.find(row => row.id === variableRadioOptionId);
@@ -219,18 +222,15 @@ export const mutations = {
     //   row => row.id === id
     // );
   },
-
   addVariableRadioOption(state, optionId) {
     const variableOptionElement = state.activeElement.variableOptions.find(row => row.id === optionId);
     variableOptionElement.variableRadioOptions.push({id: uuidv4(), label: "", value: ""});
   },
-
   deleteVariableRadioOption(state, optionId) {
     const variableOptionElementIndex = state.activeElement.variableOptions.findIndex(row => row.id === optionId);
     const variableOptionElement = state.activeElement.variableOptions.find(row => row.id === optionId);
     variableOptionElement.variableRadioOptions.pop();
   },
-
 
   updateVarCheckboxText(state, {value, variableOptionId, variableCheckboxOptionId}) {
     const variableOptionElement = state.activeElement.variableOptions.find(row => row.id === variableOptionId);
@@ -241,12 +241,10 @@ export const mutations = {
     //   row => row.id === id
     // );
   },
-
   addVariableCheckboxOption(state, optionId) {
     const variableOptionElement = state.activeElement.variableOptions.find(row => row.id === optionId);
     variableOptionElement.variableCheckboxOptions.push({id: uuidv4(), label: "", value: ""});
   },
-
   deleteVariableCheckboxOption(state, optionId) {
     const variableOptionElementIndex = state.activeElement.variableOptions.findIndex(row => row.id === optionId);
     const variableOptionElement = state.activeElement.variableOptions.find(row => row.id === optionId);
@@ -268,14 +266,20 @@ export const mutations = {
   },
 
 
+  updateTextEditorContent(state, { id, html }) {
+    state.activeElement.content = html;
+    // const element = state.widgets.find(w => w.uuid === id);
+    // element.content = text;
+
+  },
+
   // ======================================================================================
   // Other
   // ======================================================================================
 
   updateTextareaVisibility(state, value) {
     if (!state.activeElement.textarea) return;
-    state.activeElement.textarea.isVisible = !state.activeElement.textarea
-      .isVisible;
+    state.activeElement.textarea.isVisible = value;
   },
   updateTextareaWidgetWidth(state, value) {
     if (!state.activeElement.textarea) return;
@@ -346,6 +350,7 @@ export const getters = {
   },
   getVarMinValue: state => widgetUuid => {
     const widget = state.widgets.find(w => w.uuid === widgetUuid);
+    console.log("WD:", widget);
     if (!widget) return 1;
     return widget.varMinNumber;
   },
@@ -357,6 +362,16 @@ export const getters = {
   getVarValue: (state) => (id, key) => {
     const element = state.activeElement.variableOptions.find(w => w.id === id);
     return element[key];
+  },
+  getTextareaWidgetVisibility: (state) => {
+    return state.activeElement.textarea.isVisible;
+  },
+  getTextareaWidgetOptions: (state) => {
+    return [];
+  },
+
+  getTextEditorContent: state => widgetUuid => {
+    return state.activeElement.textEditorContent;
   },
 
   uuid: state => state.uuid

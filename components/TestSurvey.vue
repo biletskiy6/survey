@@ -10,14 +10,13 @@
           class="widget"
           :is="val.type"
           :val="val"
+          :isDev="false"
           :widgetIdx="index"
           :formData="formData"
           :readonly="false"
           :data-uuid="val.uuid"
         />
       </div>
-      <input v-if="formData.length" type="submit" />
-      <p v-else> Nothing to show :) </p>
     </form>
   </div>
 </template>

@@ -28,9 +28,11 @@
     "vee-validate": "^3.3.0",
     "vue-acl": "^4.1.10",
     "vue-multipane": "^0.9.5",
+    "vue-quill-editor": "^3.0.6",
     "vue-select": "^3.10.3",
     "vue-splitpane": "^1.0.6",
     "vue2-editor": "^2.10.2",
+    "vue2-perfect-scrollbar": "^1.5.0",
     "vuedraggable": "^2.23.2",
     "vuelidate": "^0.7.5",
     "vuesax": "3.11.13"
