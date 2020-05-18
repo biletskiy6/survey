@@ -1,49 +1,56 @@
 import {v4 as uuidv4} from 'uuid';
 
+const getWidgets = (state) => {
+  let page = state.pages.find(p => p.id === state.activePageUuid);
+  console.log(page.widgets);
+  return page.widgets;
+}
+
 export const state = () => ({
   uuid: null,
   widgets: [],
   activeElement: {},
+  activePageUuid: null,
   iterator: 1,
   pages: [
-    { id: uuidv4(), widgets: [] }
+    {id: uuidv4(), widgets: []}
   ],
 });
 
 
 export const mutations = {
   add(state, {item}) {
+    // const whichPageWidgets = state.pages.find(p => p.id === state.activePageUuid);
+    // const whichPageWidgetsArray = whichPageWidgets.widgets;
 
+    const widgets = getWidgets(state);
 
     let itemData = item.data ? item.data() : null;
     let def = {uuid: uuidv4(), counter: state.iterator};
     let setting = JSON.parse(JSON.stringify(item.setting));
-    state.widgets.push(Object.assign(setting, def, itemData));
-    state.activeElement = state.widgets.find(
-      w => w.uuid === state.widgets[state.widgets.length - 1].uuid
+
+
+    widgets.push(Object.assign(setting, def, itemData));
+    state.activeElement = widgets.find(
+      w => w.uuid === widgets[widgets.length - 1].uuid
     );
-    state.uuid = state.widgets[state.widgets.length - 1].uuid;
+    state.uuid = widgets[widgets.length - 1].uuid;
+
+    // state.widgets.push(Object.assign(setting, def, itemData));
 
 
-    console.log(item);
-
-    if(item.name !== 'separator-line' && item.name !== 'text-editor') {
-      state.iterator++;
-    }
-
-    // this.$commit('select', {
-    //   uuid: state.widgets[state.widgets.length - 1].uuid
-    // });
   },
   delete(state, uuid) {
-    const indexToDelete = state.widgets.findIndex(el => el.uuid === uuid);
-    state.widgets.splice(indexToDelete, 1);
+    let widgets = getWidgets(state);
+    const indexToDelete = widgets.findIndex(el => el.uuid === uuid);
+    widgets.splice(indexToDelete, 1);
     state.activeElement = {};
     state.uuid = -1;
   },
 
   copy(state, uuid) {
-    let widgetToCopy = state.widgets.find(w => w.uuid === uuid);
+    let widgets = getWidgets(state);
+    let widgetToCopy = widgets.find(w => w.uuid === uuid);
     let copied = JSON.parse(JSON.stringify(widgetToCopy));
 
     if (copied.type === 'multiple-choice') {
@@ -53,30 +60,26 @@ export const mutations = {
           id: uuidv4()
         };
       }
-
-      // widgetToCopy = {
-      //   ...widgetToCopy,
-      //   choiceRows: [
-      //     ...widgetToCopy.choiceRows,
-
-      //   ]
-      // }
     }
 
-    state.widgets.push({...copied, uuid: uuidv4()});
+    widgets.push({...copied, uuid: uuidv4()});
   },
   updateWidgets(state, widgets) {
     state.widgets = widgets;
   },
+  updateStoreWidgets(state, widgets) {
+    const which = state.pages.find(p => p.id === state.activePageUuid);
+    which.widgets = widgets;
+  },
   select(state, {uuid}) {
+    let widgets = getWidgets(state);
     state.uuid = uuid;
-    state.activeElement = state.widgets.find(w => w.uuid === uuid);
+    state.activeElement = widgets.find(w => w.uuid === uuid);
   },
   updateData(state, data) {
-    let widget = state.widgets.find(w => w.uuid === data.uuid);
-    widget[data.key] = data.value;
+   let widget = getWidgets(state);
+    widget[0][data.key] = data.value;
   },
-
 
 
   // ======================================================================================
@@ -123,7 +126,10 @@ export const mutations = {
 
 
   updateSliderValue(state, {id, value, key}) {
-    const widget = state.widgets.find(w => w.uuid === id);
+    let widgets = getWidgets(state);
+    const widget = widgets.find(w => w.uuid === id);
+
+
     if (widget.slider[key]) {
       widget.slider[key] = Number(value);
     }
@@ -131,7 +137,7 @@ export const mutations = {
 
 
   // ======================================================================================
-  // Ranking
+  // Ranking7
   // ======================================================================================
 
   updateRankingRows(state, value) {
@@ -156,7 +162,8 @@ export const mutations = {
   // ======================================================================================
 
   addVariableOption(state, widgetUuid) {
-    const widget = state.widgets.find(w => w.uuid === widgetUuid);
+    let widgets = getWidgets(state);
+    const widget = widgets.find(w => w.uuid === widgetUuid);
     if (widget.variableOptions) {
       widget.variableOptions.push({
         id: uuidv4(),
@@ -185,13 +192,15 @@ export const mutations = {
   },
 
   updateVarMinValue(state, {id, value}) {
-    const widget = state.widgets.find(w => w.uuid === id);
+    let widgets = getWidgets(state);
+    const widget = widgets.find(w => w.uuid === id);
     if (widget.varMinNumber) {
       widget.varMinNumber = value;
     }
   },
   updateVarMaxValue(state, {id, value}) {
-    const widget = state.widgets.find(w => w.uuid === id);
+    let widgets = getWidgets(state);
+    const widget = widgets.find(w => w.uuid === id);
     if (widget.varMaxNumber) {
       widget.varMaxNumber = value;
     }
@@ -279,7 +288,7 @@ export const mutations = {
   },
 
 
-  updateTextEditorContent(state, { id, html }) {
+  updateTextEditorContent(state, {id, html}) {
     state.activeElement.content = html;
     // const element = state.widgets.find(w => w.uuid === id);
     // element.content = text;
@@ -294,6 +303,15 @@ export const mutations = {
     state.pages.push({
       id: uuidv4(), widgets: []
     })
+  },
+
+  selectPage(state, uuid) {
+    state.activePageUuid = uuid;
+    state.activeElement = {};
+  },
+
+  setActivePage(state) {
+    state.activePageUuid = state.pages[0].id;
   },
 
   // ======================================================================================
@@ -347,38 +365,44 @@ export const getters = {
   multipleChoiceRows: state => state.activeElement.choiceRows || [],
   rankingRows: state => state.activeElement.rankingRows || [],
   getSliderStepValue: state => widgetUuid => {
-    const widget = state.widgets.find(w => w.uuid === widgetUuid);
+    let widgets = getWidgets(state);
+    const widget = widgets.find(w => w.uuid === widgetUuid);
     if (!widget) return 1;
     return widget.slider ? widget.slider.step : 1;
   },
   getSliderMinValue: state => widgetUuid => {
-    const widget = state.widgets.find(w => w.uuid === widgetUuid);
+    let widgets = getWidgets(state);
+    const widget = widgets.find(w => w.uuid === widgetUuid);
     if (!widget) return 1;
     return widget.slider.min ? widget.slider.min : 1;
     // return state.activeElement.slider.min;
   },
   getSliderMaxValue: state => widgetUuid => {
-    const widget = state.widgets.find(w => w.uuid === widgetUuid);
+    let widgets = getWidgets(state);
+    const widget = widgets.find(w => w.uuid === widgetUuid);
     if (!widget) return 1;
     return widget.slider ? widget.slider.max : 1;
   },
   getSliderValue: state => widgetUuid => {
-    const widget = state.widgets.find(w => w.uuid === widgetUuid);
+    let widgets = getWidgets(state);
+    const widget = widgets.find(w => w.uuid === widgetUuid);
     if (!widget) return 1;
     return widget.slider ? widget.slider.value : 1;
   },
   numberOfScales: state => widgetUuid => {
-    const widget = state.widgets.find(w => w.uuid === widgetUuid);
+    let widgets = getWidgets(state);
+    const widget = widgets.find(w => w.uuid === widgetUuid);
     if (!widget) return 1;
   },
   getVarMinValue: state => widgetUuid => {
-    const widget = state.widgets.find(w => w.uuid === widgetUuid);
-    console.log("WD:", widget);
+    let widgets = getWidgets(state);
+    const widget = widgets.find(w => w.uuid === widgetUuid);
     if (!widget) return 1;
     return widget.varMinNumber;
   },
   getVarMaxValue: state => widgetUuid => {
-    const widget = state.widgets.find(w => w.uuid === widgetUuid);
+    let widgets = getWidgets(state);
+    const widget = widgets.find(w => w.uuid === widgetUuid);
     if (!widget) return 1;
     return widget.varMaxNumber;
   },
@@ -398,5 +422,7 @@ export const getters = {
   },
 
   uuid: state => state.uuid,
-  pages: state => state.pages
+  pages: state => state.pages,
+  pageWidgets: state => state.pages.find(p => p.id === state.activePageUuid).widgets || [],
+  activePageId: state => state.activePageUuid
 };

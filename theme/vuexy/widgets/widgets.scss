@@ -2,6 +2,15 @@
   padding: 0 10px;
 }
 
+.pages {
+  .page {
+    &.active {
+      background: $primary;
+      color: #fff;
+    }
+  }
+}
+
 .widget {
 
   &-appearence {

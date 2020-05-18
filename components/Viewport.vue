@@ -1,13 +1,15 @@
 <template>
   <div class="survey-viewport">
-
     <div class="pages">
-      <div :key="page.id" v-for="(page, index) in pages">
-        Page {{ index + 1 }}
+      <div class="pages-wrapper">
+        <div class="page" :class="{ active: activePageId === page.id }" @click="handleSelectPage(page.id)" :key="page.id" v-for="(page, index) in pages">
+          Page {{ index + 1 }}
+        </div>
       </div>
-      <vs-button @click="handleAddPage">Add new page</vs-button>
+      <div>
+        <vs-button @click="handleAddPage">Add new page</vs-button>
+      </div>
     </div>
-
 
     <draggable
       v-if="widgetStore.length"
@@ -67,10 +69,13 @@
     name: 'Viewport',
     mounted() {
     },
+    beforeCreate() {
+      this.$store.commit('widget/setActivePage');
+    },
     data() {
       return {
         formData: [],
-      };
+      }
     },
     computed: {
       pages() {
@@ -79,14 +84,26 @@
       id() {
         return this.$store.getters['widget/uuid'];
       },
+      activePageId() {
+        return this.$store.getters['widget/activePageId'];
+      },
       widgetStore: {
         get() {
-          return this.$store.getters['widget/widgets'];
+          return this.$store.getters['widget/pageWidgets'];
         },
         set(value) {
-          this.$store.dispatch('widget/updateWidgets', value);
+          this.$store.commit('widget/updateStoreWidgets', value);
         }
       }
+
+      // widgetStore: {
+      //   get() {
+      //     return this.$store.getters['widget/widgets'];
+      //   },
+      //   set(value) {
+      //     this.$store.dispatch('widget/updateWidgets', value);
+      //   }
+      // }
       // widgetStore() {
       //     return this.$store.getters['widget/widgets'];
       // }
@@ -98,6 +115,9 @@
       }
     },
     methods: {
+      handleSelectPage(uuid) {
+        this.$store.commit('widget/selectPage', uuid);
+      },
       handleAddPage() {
         this.$store.commit('widget/addNewPage');
       },
@@ -125,5 +145,15 @@
 </script>
 
 <style scoped>
-
+  .pages-wrapper {
+    display: flex;
+    overflow: auto;
+    white-space: nowrap;
+  }
+  .page {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    margin-right: 5px;
+  }
 </style>

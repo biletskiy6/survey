@@ -48,6 +48,7 @@ export default {
     '@/plugins/acl',
     '@/plugins/vue-select',
     '@/plugins/perfect-scrollbar',
+    '@/plugins/vue-swiper',
     { src : '@/plugins/vue-apexcharts.js', ssr : false },
     { src: "@/plugins/vue-quill-editor.js", ssr: false },
   ],
