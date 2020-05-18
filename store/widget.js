@@ -5,6 +5,9 @@ export const state = () => ({
   widgets: [],
   activeElement: {},
   iterator: 1,
+  pages: [
+    { id: uuidv4(), widgets: [] }
+  ],
 });
 
 
@@ -284,6 +287,16 @@ export const mutations = {
   },
 
   // ======================================================================================
+  // Pages
+  // ======================================================================================
+
+  addNewPage(state) {
+    state.pages.push({
+      id: uuidv4(), widgets: []
+    })
+  },
+
+  // ======================================================================================
   // Other
   // ======================================================================================
 
@@ -384,5 +397,6 @@ export const getters = {
     return state.activeElement.textEditorContent;
   },
 
-  uuid: state => state.uuid
+  uuid: state => state.uuid,
+  pages: state => state.pages
 };

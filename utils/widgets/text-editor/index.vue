@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div v-if="!isDev" v-html="val.content"></div>
+    <div class="ql-snow">
+      <div class="ql-editor ql-editor--preview" v-if="!isDev" v-html="val.content"></div>
+    </div>
+
     <div v-if="isDev" class="quill-editor"
          :content="val.content"
          @change="onEditorChange($event)"
@@ -87,7 +90,7 @@
       text: 'Paste your text here',
       belong: 'page',
       textEditorContent: '<p>Initial</p>',
-      content: '<p>tttteeeeesssstttt</p>'
+      content: '<p></p>'
     },
     // Attribute Meaning Reference widgets/pic/index.vue
     props: ['val', 'h', 'w', 'playState', 'text', "index", "uuid", "isDev"],
@@ -112,7 +115,7 @@
     },
   }
 </script>
-<style scoped>
+<style>
   .ql-editor.ql-editor--preview {
     min-height: auto;
   }

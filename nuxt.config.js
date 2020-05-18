@@ -48,6 +48,7 @@ export default {
     '@/plugins/acl',
     '@/plugins/vue-select',
     '@/plugins/perfect-scrollbar',
+    { src : '@/plugins/vue-apexcharts.js', ssr : false },
     { src: "@/plugins/vue-quill-editor.js", ssr: false },
   ],
   /*
@@ -58,10 +59,8 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
     [
       'nuxt-i18n',
@@ -94,9 +93,24 @@ export default {
    */
   build: {
     transpile: ['vee-validate/dist/rules'],
+    vendor : ['vue-apexcharts'],
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {
+      const vueLoader = config.module.rules.find(
+        rule => rule.loader === "vue-loader"
+      );
+      vueLoader.options.transformToRequire = {
+        img: "src",
+        image: "xlink:href",
+        "b-img": "src",
+        "b-img-lazy": ["src", "blank-src"],
+        "b-card": "img-src",
+        "b-card-img": "img-src",
+        "b-carousel-slide": "img-src",
+        "b-embed": "src"
+      };
+    }
   }
 };

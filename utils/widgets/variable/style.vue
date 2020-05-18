@@ -10,7 +10,7 @@
     <div class="variable-options">
       <div class="mb-2" :key="opt.id" v-for="(opt, index) in activeElement.variableOptions">
 
-        <div class="">
+        <div class="option-label">
           <div class="d-flex ai-c jcsb">
             <h5 class="fw-m">Option {{ index + 1}}</h5>
             <vs-button
@@ -20,15 +20,16 @@
               icon="delete"
             ></vs-button>
           </div>
-          <vs-divider/>
+
         </div>
 
 
-        <div>
-          <h6 class="fw-b mb-1">Option Title</h6>
-          <input placeholder="Answer option" @input="updateTitleForVariableOption($event, opt.id)"
-                 :value="opt.label" class="custom-input mb-1" type="text">
-
+        <div class="pl-15 pr-15">
+          <div class="mb-2">
+            <h6 class="fw-b mb-1">Option Title</h6>
+            <input placeholder="Answer option" @input="updateTitleForVariableOption($event, opt.id)"
+                   :value="opt.label" class="custom-input mb-1" type="text">
+          </div>
 
           <div class="mb-2">
             <h6 class="fw-b mb-1">Choose question type</h6>
@@ -37,7 +38,7 @@
             </v-select>
           </div>
 
-          <div v-if="opt.selectedVariableOption === 'dnd-numbers'">
+          <div class="variable-dnd-numbers-style" v-if="opt.selectedVariableOption === 'dnd-numbers'">
             <vs-input-number label="Min:" @change="handleVarValue($event, opt.id, 'varMinNumber')"
                              :value="getVarValue(opt.id, 'varMinNumber')"/>
 

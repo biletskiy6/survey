@@ -1,6 +1,6 @@
 <template>
   <div class="widget-single-input">
-    <h4 class="fw-b"> {{ widgetIdx + 1 }}.  {{ val.questionTitle }}</h4>
+    <h4 class="fw-b"> {{ val.questionTitle }}</h4>
     <p>{{ val.questionDescription }}</p>
 
     <div :key="opt.id" v-for="opt in val.variableOptions" class="variable-options mb-2">

@@ -1,5 +1,14 @@
 <template>
   <div class="survey-viewport">
+
+    <div class="pages">
+      <div :key="page.id" v-for="(page, index) in pages">
+        Page {{ index + 1 }}
+      </div>
+      <vs-button @click="handleAddPage">Add new page</vs-button>
+    </div>
+
+
     <draggable
       v-if="widgetStore.length"
       @change="onUnpublishedChange"
@@ -16,9 +25,9 @@
         :key="val.uuid"
         v-for="(val, index) in widgetStore"
       >
-        {{ val }}
-        <WidgetToolbar :widgetUuid="val.uuid"/>
+        <WidgetToolbar @click="handleClick(val.uuid)" :widgetUuid="val.uuid"/>
         <component
+          @click.native="handleClick(val.uuid)"
           class="widget"
           :is="val.type"
           :isDev="true"
@@ -64,6 +73,9 @@
       };
     },
     computed: {
+      pages() {
+        return this.$store.getters['widget/pages'];
+      },
       id() {
         return this.$store.getters['widget/uuid'];
       },
@@ -86,6 +98,9 @@
       }
     },
     methods: {
+      handleAddPage() {
+        this.$store.commit('widget/addNewPage');
+      },
       onUnpublishedChange(param) {
         // console.log(this.widgetStore);
         //update state
@@ -93,6 +108,9 @@
 
         this.$store.dispatch('widget/updateWidgets', this.widgetStore);
         // this.widgetStore = this.$store.getters['widget/widgets'];
+      },
+      handleClick(uuid) {
+        this.$store.commit('widget/select', {uuid});
       },
       handleSelect(uuid) {
         this.$store.commit('widget/select', {uuid});

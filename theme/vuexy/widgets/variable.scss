@@ -1,3 +1,37 @@
+.option-label {
+  padding-left: 5px;
+  margin: 20px 0;
+  background: linear-gradient(118deg, rgba(var(--vs-primary), 0.9), rgba(var(--vs-primary), 0.7));
+  h5 {
+    color: #fff;
+  }
+  .vs-button {
+    padding-top: 7px;
+  }
+}
+
+.variable-dnd-numbers-style {
+  display: flex;
+  span {
+    font-weight: 600;
+    margin-left: 5px;
+  }
+  .btn-plus, .btn-less {
+    display: none;
+  }
+  .vs-input-number--input {
+    flex: 1;
+  }
+  .vs-input-number {
+    flex: 1;
+    border-bottom: 1px solid $primary;
+  }
+}
+
+.variable-dnd-numbers  {
+  //display: none;
+}
+
 .variable-single-answer .con-vs-radio, .con-vs-checkbox {
   justify-content: flex-start;
 }

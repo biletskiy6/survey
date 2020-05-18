@@ -121,6 +121,7 @@ export default {
     email: "",
     password: "",
     isPasswordToggle: false,
+    backgroundLoading:'linear-gradient(30deg,rgba(var(--vs-primary),1),rgba(var(--vs-primary),.1))',
     loading: false
   }),
   computed: {
@@ -144,6 +145,12 @@ export default {
     }
   },
   methods: {
+    openLoadingBackground(){
+      this.$vs.loading({background:this.backgroundLoading,color:'rgb(255, 255, 255)'})
+      setTimeout( ()=> {
+        this.$vs.loading.close()
+      }, 3000);
+    },
     handleVisibilityPassword() {
       this.isPasswordToggle = !this.isPasswordToggle;
     },

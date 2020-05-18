@@ -6,7 +6,7 @@
         <vs-tab icon="build" :label="surveyLabel">
           <div class="con-tab-ejemplo">
             <splitpanes style="height: 100%">
-              <pane size="20" min-size="10">
+              <pane size="15" min-size="5">
                 <Toolbar/>
               </pane>
               <pane size="60" min-size="50">
@@ -14,8 +14,8 @@
                   <Viewport/>
                 </perfect-scrollbar>
               </pane>
-              <pane size="20" min-size="10">
-                <perfect-scrollbar>
+              <pane size="25" min-size="10">
+                <perfect-scrollbar class="ps--panel">
                   <Panel/>
                 </perfect-scrollbar>
               </pane>
@@ -34,7 +34,7 @@
         </vs-tab>
         <vs-tab icon="show_chart" :label="evaluationLabel">
           <div class="con-tab-ejemplo">
-            Evaluation
+            <Evaluation/>
           </div>
         </vs-tab>
         <vs-tab icon="visibility" :disabled="!widgets.length" :label="testSurveyLabel">
@@ -58,10 +58,12 @@
   import Panel from '@/components/Panel';
   import TestSurvey from '@/components/TestSurvey';
   import Settings from '@/components/Settings';
+  import Evaluation from "@/components/Evaluation";
 
   export default {
     name: 'index',
     components: {
+      Evaluation,
       Toolbar,
       Viewport,
       Panel,
