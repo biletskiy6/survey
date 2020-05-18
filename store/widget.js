@@ -2,7 +2,6 @@ import {v4 as uuidv4} from 'uuid';
 
 const getWidgets = (state) => {
   let page = state.pages.find(p => p.id === state.activePageUuid);
-  console.log(page.widgets);
   return page.widgets;
 }
 
@@ -77,8 +76,9 @@ export const mutations = {
     state.activeElement = widgets.find(w => w.uuid === uuid);
   },
   updateData(state, data) {
-   let widget = getWidgets(state);
-    widget[0][data.key] = data.value;
+   let widgets = getWidgets(state);
+   let which = widgets.find(w => w.uuid === data.uuid);
+    which[data.key] = data.value;
   },
 
 
