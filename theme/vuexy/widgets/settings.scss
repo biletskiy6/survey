@@ -1,0 +1,20 @@
+
+.settings {
+  &-row {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.setting {
+  &-opt {
+    flex: 3;
+
+    .con-vs-radio {
+      justify-content: flex-start;
+    }
+  }
+  &-label {
+    flex: 1;
+  }
+}

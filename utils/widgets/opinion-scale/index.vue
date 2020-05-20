@@ -8,16 +8,16 @@
 
     <div class="scales d-flex">
       <vs-radio
+        v-model="formData"
         class="d-flex fd-c"
         v-for="(scale, index) in val.scales"
         :key="index"
         v-show="scale.isVisible"
-        vs-name="scale"
+        :vs-name="val.uuid"
         @change="handleScale($event)"
         :value="index"
       >{{ scale.id }}
-      </vs-radio
-      >
+      </vs-radio>
     </div>
 
     <div>
@@ -81,17 +81,17 @@
         isVisible: false,
         width: '100%',
         widthOptions: [
-          { label: 'Size: 25%', value: '25%' },
-          { label: 'Size: 50%', value: '50%' },
-          { label: 'Size: 75%', value: '75%' },
-          { label: 'Size: 100%', value: '100%' }
+          {label: 'Size: 25%', value: '25%'},
+          {label: 'Size: 50%', value: '50%'},
+          {label: 'Size: 75%', value: '75%'},
+          {label: 'Size: 100%', value: '100%'}
         ],
         text: ''
       },
       belong: 'page'
     },
     // Attribute Meaning Reference widgets/pic/index.vue
-    props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid', 'widgetIdx', 'readonly'],
+    props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid', 'widgetIdx', 'readonly', 'formData'],
     components: {
       WidgetToolbar
     },

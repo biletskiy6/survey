@@ -1,6 +1,15 @@
 .test-survey {
   background: #fff;
   padding: 30px;
+  height: 100%;
+
+  .password-restriction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
 }
 .custom-resizer {
   width: 100%;
@@ -66,7 +75,7 @@
 }
 
 .survey {
-  height: inherit;
+  height: auto;
   overflow-y: auto;
   &-toolbar, &-panel {
     padding-top: 20px;

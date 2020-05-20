@@ -2,12 +2,23 @@
   <div class="survey-viewport">
     <div class="pages">
       <div class="pages-wrapper">
-        <div class="page" :class="{ active: activePageId === page.id }" @click="handleSelectPage(page.id)" :key="page.id" v-for="(page, index) in pages">
-          Page {{ index + 1 }}
+
+        <div class="page" :class="{ active: activePageId === page.id }" @click.stop="handleSelectPage(page.id)"
+             :key="page.id" v-for="(page, index) in pages">
+
+          <div v-if="index > 0 && activePageId === page.id" class="page-toolbar">
+            <vs-button color="danger" @click.stop="handleDelete(page.id)" type="line" icon="delete"></vs-button>
+            <vs-button color="primary" @click.stop="handleCopy(page.id)" type="line" icon="file_copy"></vs-button>
+          </div>
+
+          <div class="page-content"> Page {{ index + 1 }}</div>
+
         </div>
       </div>
       <div>
-        <vs-button @click="handleAddPage">Add new page</vs-button>
+
+        <vs-button color="primary" @click="handleAddPage" type="gradient">New Page</vs-button>
+
       </div>
     </div>
 
@@ -21,24 +32,25 @@
       handle=".btn-drag"
     >
       <transition-group type="transition" name="flip-list">
-      <div
-        class="widget-list d-flex fd-c item"
-        :class="{ active: id === val.uuid }"
-        :key="val.uuid"
-        v-for="(val, index) in widgetStore"
-      >
-        <WidgetToolbar @click="handleClick(val.uuid)" :widgetUuid="val.uuid"/>
-        <component
-          @click.native="handleClick(val.uuid)"
-          class="widget"
-          :is="val.type"
-          :isDev="true"
-          :widgetIdx="index"
-          :val="val"
-          :readonly="true"
-          :data-uuid="val.uuid"
-        />
-      </div>
+        <div
+          class="widget-list d-flex fd-c item"
+          :class="{ active: id === val.uuid }"
+          :key="val.uuid"
+          v-for="(val, index) in widgetStore"
+        >
+          <WidgetToolbar @click="handleClick(val.uuid)" :widgetUuid="val.uuid"/>
+          <component
+            @click.native="handleClick(val.uuid)"
+            class="widget"
+            :is="val.type"
+            :isDev="true"
+            :widgetIdx="index"
+            :val="val"
+            :formData="formData"
+            :readonly="true"
+            :data-uuid="val.uuid"
+          />
+        </div>
       </transition-group>
     </draggable>
 
@@ -74,10 +86,15 @@
     },
     data() {
       return {
-        formData: [],
+        formData: {},
       }
     },
     computed: {
+      pageWidgetsLength: {
+        get() {
+          return this.$store.getters['widget/pageWidgetsLength'];
+        }
+      },
       pages() {
         return this.$store.getters['widget/pages'];
       },
@@ -95,18 +112,6 @@
           this.$store.commit('widget/updateStoreWidgets', value);
         }
       }
-
-      // widgetStore: {
-      //   get() {
-      //     return this.$store.getters['widget/widgets'];
-      //   },
-      //   set(value) {
-      //     this.$store.dispatch('widget/updateWidgets', value);
-      //   }
-      // }
-      // widgetStore() {
-      //     return this.$store.getters['widget/widgets'];
-      // }
     },
     watch: {
       widgetStore(value) {
@@ -115,6 +120,15 @@
       }
     },
     methods: {
+      handleCopy(uuid) {
+        this.$store.commit('widget/copyPage', uuid);
+      },
+      handleDeletePage() {
+        alert(1);
+      },
+      handleDelete(uuid) {
+        this.$store.commit('widget/deletePage', uuid);
+      },
       handleSelectPage(uuid) {
         this.$store.commit('widget/selectPage', uuid);
       },
@@ -126,7 +140,7 @@
         //update state
         // alert(1);
 
-        this.$store.dispatch('widget/updateWidgets', this.widgetStore);
+        // this.$store.dispatch('widget/updateWidgets', this.widgetStore);
         // this.widgetStore = this.$store.getters['widget/widgets'];
       },
       handleClick(uuid) {
@@ -145,15 +159,5 @@
 </script>
 
 <style scoped>
-  .pages-wrapper {
-    display: flex;
-    overflow: auto;
-    white-space: nowrap;
-  }
-  .page {
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #eee;
-    margin-right: 5px;
-  }
+
 </style>

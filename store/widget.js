@@ -1,8 +1,12 @@
 import {v4 as uuidv4} from 'uuid';
 
 const getWidgets = (state) => {
-  let page = state.pages.find(p => p.id === state.activePageUuid);
-  return page.widgets;
+  if (state.activePageUuid) {
+    let page = state.pages.find(p => p.id === state.activePageUuid);
+    return page.widgets;
+  }
+  return [];
+
 }
 
 export const state = () => ({
@@ -14,6 +18,18 @@ export const state = () => ({
   pages: [
     {id: uuidv4(), widgets: []}
   ],
+  settings: {
+    isBackButton: "yes",
+    statusBar: "percent",
+    accessControl: {
+      type: "no",
+      password: null
+    },
+    privacyPolicy: {
+      is: false,
+      content: null,
+    },
+  },
 });
 
 
@@ -76,8 +92,8 @@ export const mutations = {
     state.activeElement = widgets.find(w => w.uuid === uuid);
   },
   updateData(state, data) {
-   let widgets = getWidgets(state);
-   let which = widgets.find(w => w.uuid === data.uuid);
+    let widgets = getWidgets(state);
+    let which = widgets.find(w => w.uuid === data.uuid);
     which[data.key] = data.value;
   },
 
@@ -129,7 +145,6 @@ export const mutations = {
     let widgets = getWidgets(state);
     const widget = widgets.find(w => w.uuid === id);
 
-
     if (widget.slider[key]) {
       widget.slider[key] = Number(value);
     }
@@ -137,7 +152,7 @@ export const mutations = {
 
 
   // ======================================================================================
-  // Ranking7
+  // Ranking
   // ======================================================================================
 
   updateRankingRows(state, value) {
@@ -314,6 +329,43 @@ export const mutations = {
     state.activePageUuid = state.pages[0].id;
   },
 
+  copyPage(state, uuid) {
+    let pageToCopy = state.pages.find(p => p.id === uuid);
+    let copied = JSON.parse(JSON.stringify(pageToCopy));
+    state.pages.push({...copied, id: uuidv4()});
+  },
+
+  deletePage(state, uuid) {
+    const pageIndexToDelete = state.pages.findIndex(p => p.id === uuid);
+    const firstPageUuid = state.pages[0].id;
+    state.pages.splice(pageIndexToDelete, 1);
+    state.activePageUuid = firstPageUuid;
+  },
+
+  // ======================================================================================
+  // Settings
+  // ======================================================================================
+
+  isBackButton(state, value) {
+    state.settings.isBackButton = value;
+  },
+  statusBar(state, value) {
+    state.settings.statusBar = value;
+  },
+  accessControlType(state, value) {
+    state.settings.accessControl.type = value;
+  },
+  accessControlPassword(state, value) {
+    state.settings.accessControl.password = value;
+  },
+
+  isPrivacyPolicy(state, value) {
+    state.settings.privacyPolicy.is = !state.settings.privacyPolicy.is;
+  },
+  updatePrivacyPolicyContent(state, html) {
+    state.settings.privacyPolicy.content = html;
+  },
+
   // ======================================================================================
   // Other
   // ======================================================================================
@@ -421,8 +473,32 @@ export const getters = {
     return state.activeElement.textEditorContent;
   },
 
+  pageWidgetsLength: state => {
+    let isset = [];
+    state.pages.map(p => {
+      if (p.widgets.length) {
+        isset.push(true);
+      }
+    });
+
+    return isset;
+    // return state.pages.reduce((a, b) => a.widgets.length + b.widgets.length, 0);
+  },
+
   uuid: state => state.uuid,
   pages: state => state.pages,
-  pageWidgets: state => state.pages.find(p => p.id === state.activePageUuid).widgets || [],
-  activePageId: state => state.activePageUuid
+  pageWidgets: state => {
+    const page = state.pages.find(p => p.id === state.activePageUuid);
+    if (page && page.widgets) {
+      return page.widgets;
+    }
+    return [];
+  },
+  activePageId: state => state.activePageUuid,
+  isBackButton: state => state.settings.isBackButton,
+  statusBar: state => state.settings.statusBar,
+  accessControlType: state => state.settings.accessControl.type,
+  accessControlPassword: state => state.settings.accessControl.password,
+  isPrivacyPolicy: state => state.settings.privacyPolicy.is,
+  privacyPolicyContent: state => state.settings.privacyPolicy.content
 };

@@ -37,7 +37,7 @@
             <Evaluation/>
           </div>
         </vs-tab>
-        <vs-tab icon="visibility" :disabled="!widgets.length" :label="testSurveyLabel">
+        <vs-tab :disabled="!pageWidgetsLength.length" icon="visibility" :label="testSurveyLabel">
           <div  class="con-tab-ejemplo">
             <TestSurvey/>
           </div>
@@ -75,6 +75,9 @@
       Settings
     },
     computed: {
+      pageWidgetsLength() {
+        return this.$store.getters['widget/pageWidgetsLength'];
+      },
       surveyLabel() {
         return this.$t('navTabs.surveyBuilder');
       },
@@ -91,7 +94,7 @@
         return this.$t('navTabs.testSurvey');
       },
       widgets() {
-        return this.$store.getters['widget/widgets'];
+        return this.$store.getters['widget/pageWidgets'];
       }
     }
   };

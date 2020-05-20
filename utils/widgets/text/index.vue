@@ -1,12 +1,12 @@
 <template>
   <div class="widget-single-input">
     <div class="mb-1">
-
       <h4 class="fw-b">{{ val.questionTitle }}</h4>
       <p>{{ val.questionDescription }}</p>
     </div>
 
     <vs-input
+      v-model="formData[val.uuid]"
       :readonly="readonly"
       class="inputx"
     />
