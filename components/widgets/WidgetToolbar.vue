@@ -4,7 +4,7 @@
       v-tooltip.top-center="tooltipDrag"
       color="primary"
       type="flat"
-      icon="menu"
+      icon="drag_indicator"
       class="btn-drag"
     ></vs-button>
     <vs-button

@@ -1,7 +1,7 @@
 <template>
   <div class="survey">
 
-    <div style="background: #fff; height: 100%;" class="">
+    <div style="background: #eee; height: 100%;" class="">
       <vs-tabs color="#00C58E" alignment="fixed">
         <vs-tab icon="build" :label="surveyLabel">
           <div class="con-tab-ejemplo">

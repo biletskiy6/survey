@@ -1,5 +1,5 @@
 .widget-list {
-  padding: 0 10px;
+
 }
 
 .pages-wrapper {
@@ -13,13 +13,23 @@
 .page {
   position: relative;
   display: flex;
-  flex-direction: column;
+  //flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  border: 1px solid #DFDFDF;
   cursor: pointer;
   border-radius: 4px;
   margin-right: 15px;
-  min-height: 80px;
+
+  color: #2F495E;
+
+  button {
+    padding: 0;
+
+    i {
+      color: #2F495E;
+    }
+
+  }
 
   &-toolbar {
     //position: absolute;
@@ -27,9 +37,19 @@
   }
 
   &.active {
+    background: #fcfcfc;
+    border: 1px solid $primary;
+    color: $primary;
+
+    button {
+      i {
+        color: $primary;
+      }
+    }
+
     .page-content {
       //background: $primary;
-      border-bottom-color: $primary;
+      //border-bottom-color: $primary;
     }
   }
 
@@ -79,10 +99,10 @@
     // margin-top: 20px;
 
     &-item {
+      position: relative;
       display: flex;
       align-items: center;
       color: #333;
-
       padding-left: 15px;
       padding-right: 15px;
       padding-bottom: 8px;
@@ -97,27 +117,6 @@
         border-bottom: none;
       }
 
-      &.active {
-        background: linear-gradient(118deg, rgba(var(--vs-primary), 1), rgba(var(--vs-primary), .7));
-        color: #fff;
-
-        svg {
-          fill: #fff;
-        }
-      }
-
-      &:hover {
-        background: linear-gradient(118deg, rgba(var(--vs-primary), 1), rgba(var(--vs-primary), .7));
-        color: #fff;
-        transition: all .35s ease;
-
-        svg {
-          fill: #fff;
-          transition: all .3s ease;
-        }
-
-      }
-
       span {
         display: flex;
         align-items: center;
@@ -126,22 +125,76 @@
           margin-left: 10px;
         }
       }
-
       svg {
         flex: none;
         width: 16px;
         height: 16px;
       }
+
+      &.active {
+       color: $primary;
+        background: rgba(#00C58E, .05);
+
+        &::before {
+          position: absolute;
+          content: '';
+          left: 0;
+          opacity: 1;
+          width: 2px;
+          height: 100%;
+          background-color: $primary;
+          transition: opacity .25s ease;
+        }
+
+        svg {
+          fill: $primary;
+        }
+      }
+
+      &:hover {
+        color: $primary;
+        background: rgba(#00C58E, .05);
+
+        svg {
+          fill: $primary;
+          transition: all .3s ease;
+        }
+
+        &::before {
+          opacity: 1;
+          transition: opacity .25s ease;
+        }
+
+      }
+
+
+
+      &::before {
+        position: absolute;
+        content: '';
+        left: 0;
+        opacity: 0;
+        width: 2px;
+        height: 100%;
+        background-color: $primary;
+        transition: opacity .25s ease;
+      }
+
+
     }
   }
 
   &-toolbar {
+    display: flex;
+    align-items: center;
     border-bottom: 3px solid $theme-light-border-color;
     margin-bottom: 10px;
     border-radius: 2px;
+    height: 72px;
 
     i {
       font-size: 16px;
+
     }
   }
 }

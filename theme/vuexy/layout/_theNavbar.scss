@@ -10,7 +10,7 @@
 .main-menu-list {
   list-style-type: none;
   display: flex;
-  align-items: center;
+  align-items: center;s
 
   .menu-icon {
     display: flex;
@@ -41,7 +41,7 @@
     }
   }
   a.nuxt-link-active {
-    background: linear-gradient(118deg,rgba(var(--vs-primary),1),rgba(var(--vs-primary),.7));
+    background: linear-gradient(118deg,rgba($primary,1),rgba($primary,.7));
     color: #fff;
 
   }
@@ -68,7 +68,7 @@
       align-items: center;
       &:hover {
         span {
-          color: var(--vs-primary);
+          color: $primary;
         }
       }
     }
