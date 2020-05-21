@@ -13,7 +13,6 @@
         <vs-radio v-model="isBackButton" vs-name="isBackButton" vs-value="no">Hide: The participant can't go back in the
           survey. Recommended setting for working with filters / jumps.
         </vs-radio>
-        {{ isBackButton }}
       </div>
     </div>
     <vs-divider/>
@@ -27,7 +26,6 @@
         </vs-radio>
         <vs-radio v-model="statusBar" vs-name="statusBar" vs-value="no">No
         </vs-radio>
-        {{ statusBar }}
       </div>
     </div>
     <vs-divider/>
@@ -67,6 +65,16 @@
         </div>
 
 
+      </div>
+    </div>
+    <vs-divider/>
+    <div class="settings-row">
+      <div class="setting-label">
+        <h6>Welcome Page:</h6>
+      </div>
+
+      <div class="setting-opt">
+        <vs-checkbox v-model="isWelcomePageVisible">Is WP</vs-checkbox>
       </div>
     </div>
   </div>
@@ -119,6 +127,14 @@
       }
     },
     computed: {
+      isWelcomePageVisible: {
+        get() {
+          return this.$store.getters['widget/isWelcomePageVisible'];
+        },
+        set(value) {
+          this.$store.commit('widget/updateWelcomePageVisibility', value);
+        }
+      },
       privacyPolicyContent: {
         get() {
           return this.$store.getters['widget/privacyPolicyContent'];

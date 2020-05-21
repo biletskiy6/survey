@@ -1,15 +1,20 @@
 <template>
   <div class="widget-single-input">
     <div class="mb-1">
-      <h4 class="fw-b">{{ val.questionTitle }}</h4>
-      <p>{{ val.questionDescription }}</p>
-    </div>
 
-    <vs-input
-      v-model="formData[val.uuid]"
-      :readonly="readonly"
-      class="inputx"
-    />
+      {{ val.separatorColor }}
+
+      <h4 :style="{
+        textAlign: val.headerAlignment,
+        fontSize: val.headerFontSize + 'px',
+        color: val.headerColor,
+        fontStyle: val.isHeaderItalic ? 'italic' : 'normal',
+      }"  class="fw-b">{{ val.questionTitle }}</h4>
+      <div v-if="val.separatorLine" :style="{
+        marginTop: '10px',
+        border: `${val.separatorLineHeight}px solid ${val.separatorColor}`,
+      }"></div>
+    </div>
   </div>
 </template>
 
@@ -17,12 +22,12 @@
 
 import WidgetToolbar from '@/components/widgets/WidgetToolbar';
 import panel from './style';
-const WIDGET_NAME = 'braid-txt';
+const WIDGET_NAME = 'header-widget';
 export default {
   name: WIDGET_NAME,
   icon:
     '<svg viewBox="0 0 16 16" id="icon-text"><path d="M2 1v3h1V3h4v10H5v1h6v-1H9V3h4v1h1V1H2z"></path></svg>',
-  title: 'Text',
+  title: 'Header',
   panel,
 
   data() {
@@ -37,8 +42,15 @@ export default {
     isContainer: false,
     isChild: true,
     text: 'Paste your text here',
-    questionTitle: 'Question Title',
+    questionTitle: 'My Custom Header',
     questionDescription: '',
+    separatorLine: false,
+    separatorColor: '#eeeeee',
+    separatorLineHeight: 1,
+    headerAlignment: 'left',
+    isHeaderItalic: false,
+    headerFontSize: 18,
+    headerColor: '#333333',
     belong: 'page',
   },
   // Attribute Meaning Reference widgets/pic/index.vue

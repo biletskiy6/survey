@@ -16,6 +16,18 @@ body {
   transition: background-color 0.3s ease;
 }
 
+ul {
+  list-style-type: none;
+}
+
+.settings-container {
+  padding: 0 15px;
+}
+
+.color-wheel {
+  margin: 0 auto;
+}
+
 .d-flex {
   display: flex;
 }
@@ -25,7 +37,9 @@ body {
 .ai-c {
   align-items: center;
 }
-
+.ai-fe {
+  align-items: flex-end;
+}
 .fd-c {
   flex-direction: column;
 }
@@ -196,11 +210,12 @@ body {
   padding-right: 15px;
 }
 
-.ps {
-  height: 90vh;
+.ps, .ps--panel {
+  height: calc(90vh + 0.5px);
 }
-.ps--panel {
-  height: 90vh;
+
+.ps-scrollbar-y-rail,  .ps-scrollbar-x-rail {
+  box-sizing: border-box;
 }
 
 .tab-wrapper,

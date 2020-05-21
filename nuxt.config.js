@@ -35,6 +35,7 @@ export default {
     'quill/dist/quill.snow.css',
     'quill/dist/quill.bubble.css',
     'quill/dist/quill.core.css',
+
     '@/theme/index.scss'
   ],
   /*

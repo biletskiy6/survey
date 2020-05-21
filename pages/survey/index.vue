@@ -10,7 +10,7 @@
                 <Toolbar/>
               </pane>
               <pane size="60" min-size="50">
-                <perfect-scrollbar>
+                <perfect-scrollbar :wheelPropagation="true">
                   <Viewport/>
                 </perfect-scrollbar>
               </pane>

@@ -6,6 +6,7 @@ import ranking from './ranking/index';
 import variable from './variable/index';
 import separatorLine from './separator-line/index';
 import textEditor from './text-editor/index';
+import header from './header/index';
 // import CKeditor from './ck-text';
 
 export default {
@@ -16,5 +17,6 @@ export default {
   [ranking.name]: ranking,
   [variable.name]: variable,
   [separatorLine.name]: separatorLine,
-  [textEditor.name]: textEditor
+  [textEditor.name]: textEditor,
+  [header.name]: header,
 };

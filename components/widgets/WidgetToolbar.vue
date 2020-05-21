@@ -35,8 +35,8 @@
 export default {
   name: 'WidgetToolbar',
   props: {
-    widgetUuid: {
-      type: String
+    widget: {
+      type: Object
     }
   },
   data() {
@@ -49,15 +49,13 @@ export default {
   },
   methods: {
     handleSelect(uuid) {
-      this.$store.commit('widget/select', {
-        uuid: this.widgetUuid
-      });
+      this.$store.commit('widget/select', this.widget);
     },
     handleDelete() {
-      this.$store.dispatch('widget/delete', this.widgetUuid);
+      this.$store.dispatch('widget/delete', this.widget);
     },
     handleCopy() {
-      this.$store.dispatch('widget/copy', this.widgetUuid);
+      this.$store.dispatch('widget/copy', this.widget);
     }
   }
 };

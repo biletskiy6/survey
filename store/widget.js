@@ -11,6 +11,8 @@ const getWidgets = (state) => {
 
 export const state = () => ({
   uuid: null,
+  welcomePageWidgets: [],
+
   widgets: [],
   activeElement: {},
   activePageUuid: null,
@@ -29,55 +31,74 @@ export const state = () => ({
       is: false,
       content: null,
     },
+    isWelcomePageVisible: true,
   },
 });
 
 
 export const mutations = {
   add(state, {item}) {
-    // const whichPageWidgets = state.pages.find(p => p.id === state.activePageUuid);
-    // const whichPageWidgetsArray = whichPageWidgets.widgets;
-
     const widgets = getWidgets(state);
-
     let itemData = item.data ? item.data() : null;
     let def = {uuid: uuidv4(), counter: state.iterator};
     let setting = JSON.parse(JSON.stringify(item.setting));
-
 
     widgets.push(Object.assign(setting, def, itemData));
     state.activeElement = widgets.find(
       w => w.uuid === widgets[widgets.length - 1].uuid
     );
     state.uuid = widgets[widgets.length - 1].uuid;
-
-    // state.widgets.push(Object.assign(setting, def, itemData));
-
-
-  },
-  delete(state, uuid) {
-    let widgets = getWidgets(state);
-    const indexToDelete = widgets.findIndex(el => el.uuid === uuid);
-    widgets.splice(indexToDelete, 1);
-    state.activeElement = {};
-    state.uuid = -1;
   },
 
-  copy(state, uuid) {
-    let widgets = getWidgets(state);
-    let widgetToCopy = widgets.find(w => w.uuid === uuid);
-    let copied = JSON.parse(JSON.stringify(widgetToCopy));
+  addWelcomePageWidget(state, {item, isWelcomePage}) {
+    let setting = JSON.parse(JSON.stringify(item.setting));
+    let def = {uuid: uuidv4(), counter: state.iterator, isWelcomePage};
+    state.welcomePageWidgets.push(Object.assign(setting, def));
+    state.activeElement = state.welcomePageWidgets.find(
+      w => w.uuid === state.welcomePageWidgets[state.welcomePageWidgets.length - 1].uuid
+    );
+  },
 
-    if (copied.type === 'multiple-choice') {
-      for (let i = 0; i < copied.choiceRows.length; i++) {
-        copied.choiceRows[i] = {
-          ...copied.choiceRows[i],
-          id: uuidv4()
-        };
+  delete(state, widget) {
+    if (widget.isWelcomePage) {
+      const wPageWidgets = state.welcomePageWidgets;
+      const wIndexToDelete = wPageWidgets.findIndex(el => el.uuid === widget.uuid);
+      wPageWidgets.splice(wIndexToDelete, 1);
+      state.activeElement = {};
+      state.uuid = -1;
+    } else {
+      let widgets = getWidgets(state);
+      const indexToDelete = widgets.findIndex(el => el.uuid === widget.uuid);
+      widgets.splice(indexToDelete, 1);
+      state.activeElement = {};
+      state.uuid = -1;
+    }
+  },
+
+  copy(state, widget) {
+
+    if (widget.isWelcomePage) {
+      const wPageWidgets = state.welcomePageWidgets;
+      const widgetToCopy = wPageWidgets.find(w => w.uuid === widget.uuid);
+      const wCopied = JSON.parse(JSON.stringify(widgetToCopy));
+      wPageWidgets.push({...wCopied, uuid: uuidv4()})
+    } else {
+      let widgets = getWidgets(state);
+      let widgetToCopy = widgets.find(w => w.uuid === widget.uuid);
+      let copied = JSON.parse(JSON.stringify(widgetToCopy));
+
+      if (copied.type === 'multiple-choice') {
+        for (let i = 0; i < copied.choiceRows.length; i++) {
+          copied.choiceRows[i] = {
+            ...copied.choiceRows[i],
+            id: uuidv4()
+          };
+        }
       }
+
+      widgets.push({...copied, uuid: uuidv4()});
     }
 
-    widgets.push({...copied, uuid: uuidv4()});
   },
   updateWidgets(state, widgets) {
     state.widgets = widgets;
@@ -86,12 +107,30 @@ export const mutations = {
     const which = state.pages.find(p => p.id === state.activePageUuid);
     which.widgets = widgets;
   },
-  select(state, {uuid}) {
-    let widgets = getWidgets(state);
-    state.uuid = uuid;
-    state.activeElement = widgets.find(w => w.uuid === uuid);
+  updatePageStore(state, value) {
+    state.pages = value;
+  },
+  select(state, widget) {
+    const wPageWidgets = state.welcomePageWidgets;
+    if(widget.isWelcomePage) {
+      state.uuid = widget.uuid;
+      state.activeElement = wPageWidgets.find(w => w.uuid === widget.uuid);
+    }
+    else {
+      let widgets = getWidgets(state);
+      state.uuid = widget.uuid;
+      state.activeElement = widgets.find(w => w.uuid === widget.uuid);
+    }
+
   },
   updateData(state, data) {
+
+    if (data.isWelcomePage) {
+      let wWidget = state.welcomePageWidgets.find(w => w.uuid === data.uuid);
+      wWidget[data.key] = data.value;
+      return;
+    }
+
     let widgets = getWidgets(state);
     let which = widgets.find(w => w.uuid === data.uuid);
     which[data.key] = data.value;
@@ -366,6 +405,10 @@ export const mutations = {
     state.settings.privacyPolicy.content = html;
   },
 
+  updateWelcomePageVisibility(state, value) {
+    state.settings.isWelcomePageVisible = value;
+  },
+
   // ======================================================================================
   // Other
   // ======================================================================================
@@ -377,6 +420,31 @@ export const mutations = {
   updateTextareaWidgetWidth(state, value) {
     if (!state.activeElement.textarea) return;
     state.activeElement.textarea.width = value;
+  },
+  updateWelcomePageWidgets(state, value) {
+    state.welcomePageWidgets = value;
+  },
+
+  setSeparatorLineForHeaderWidget(state, { value }) {
+    state.activeElement.separatorLine = value;
+  },
+  setWidgetHeaderAlignment(state, {value}) {
+    state.activeElement.headerAlignment = value;
+  },
+  setWidgetHeaderFontSize(state, { value }) {
+    state.activeElement.headerFontSize = Number(value);
+  },
+  setWidgetHeaderColor(state, value) {
+    state.activeElement.headerColor = value;
+  },
+  isWidgetHeaderItalic(state, value) {
+    state.activeElement.isHeaderItalic = value;
+  },
+  setSeparatorColor(state, value) {
+    state.activeElement.separatorColor = value;
+  },
+  setSeparatorLineHeight(state, value) {
+    state.activeElement.separatorLineHeight = Number(value);
   },
 
 
@@ -500,5 +568,22 @@ export const getters = {
   accessControlType: state => state.settings.accessControl.type,
   accessControlPassword: state => state.settings.accessControl.password,
   isPrivacyPolicy: state => state.settings.privacyPolicy.is,
-  privacyPolicyContent: state => state.settings.privacyPolicy.content
+  privacyPolicyContent: state => state.settings.privacyPolicy.content,
+  welcomePageWidgets: state => state.welcomePageWidgets,
+  getSeparatorLineForHeaderWidget: state => {
+    if(state.activeElement.separatorLine) {
+      return state.activeElement.separatorLine;
+    }
+    return false;
+  },
+  getWidgetHeaderAlignment: state => {
+    return state.activeElement.headerAlignment
+  },
+  getWidgetHeaderFontSize: state => Number(state.activeElement.headerFontSize),
+  isWelcomePageVisible: state => state.settings.isWelcomePageVisible,
+  currentPageArrayIndex: state => state.pages.findIndex(p => p.id === state.activePageUuid),
+  getWidgetHeaderColor: state => state.activeElement.headerColor,
+  isWidgetHeaderItalic: state => state.activeElement.isHeaderItalic,
+  getSeparatorColor: state => state.activeElement.separatorColor,
+  getSeparatorLineHeight: state => state.activeElement.separatorLineHeight
 };

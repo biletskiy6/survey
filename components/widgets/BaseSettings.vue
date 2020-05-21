@@ -3,6 +3,7 @@
     <h5 class="fw-b tac">Basic settings</h5>
     <vs-divider/>
 
+
     <input
       class="custom-input mb-1"
       type="text"
@@ -12,6 +13,7 @@
     />
 
     <input
+      v-if="activeElement.type !== 'header-widget'"
       class="custom-input"
       type="text"
       placeholder="Question description"
@@ -32,7 +34,8 @@
         this.$store.commit('widget/updateData', {
           uuid,
           value: e.target.value,
-          key: [key]
+          key: [key],
+          isWelcomePage: this.activeElement.isWelcomePage
         });
       }
     },
