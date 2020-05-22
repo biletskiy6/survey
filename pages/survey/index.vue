@@ -32,7 +32,7 @@
             Invite Participants
           </div>
         </vs-tab>
-        <vs-tab icon="show_chart" :label="evaluationLabel">
+        <vs-tab icon="assessment" :label="evaluationLabel">
           <div class="con-tab-ejemplo">
             <Evaluation/>
           </div>

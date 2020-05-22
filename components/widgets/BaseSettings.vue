@@ -3,25 +3,26 @@
     <h5 class="fw-b tac">Basic settings</h5>
     <vs-divider/>
 
+    <div class="settings-gutter">
+      <input
+        class="custom-input mb-1"
+        type="text"
+        :value="activeElement.questionTitle"
+        placeholder="Question title"
+        v-on:input="updateWidgetData($event, activeElement.uuid, 'questionTitle')"
+      />
 
-    <input
-      class="custom-input mb-1"
-      type="text"
-      :value="activeElement.questionTitle"
-      placeholder="Question title"
-      v-on:input="updateWidgetData($event, activeElement.uuid, 'questionTitle')"
-    />
-
-    <input
-      v-if="activeElement.type !== 'header-widget'"
-      class="custom-input"
-      type="text"
-      placeholder="Question description"
-      :value="activeElement.questionDescription"
-      v-on:input="
+      <input
+        v-if="activeElement.type !== 'header-widget'"
+        class="custom-input"
+        type="text"
+        placeholder="Question description"
+        :value="activeElement.questionDescription"
+        v-on:input="
         updateWidgetData($event, activeElement.uuid, 'questionDescription')
       "
-    />
+      />
+    </div>
   </div>
 </template>
 

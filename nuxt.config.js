@@ -50,6 +50,7 @@ export default {
     '@/plugins/vue-select',
     '@/plugins/perfect-scrollbar',
     '@/plugins/vue-swiper',
+    '@/plugins/vue-clipboard',
     { src : '@/plugins/vue-apexcharts.js', ssr : false },
     { src: "@/plugins/vue-quill-editor.js", ssr: false },
   ],

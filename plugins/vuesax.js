@@ -3,7 +3,7 @@ import Vuesax from 'vuesax';
 
 import Widget from '../utils/widget-plugin';
 
-if (process.browser) {
+
     Vue.use(Vuesax, {
         theme: {
             colors: {
@@ -15,5 +15,5 @@ if (process.browser) {
             }
         }
     })
-}
+
 Vue.use(Widget);

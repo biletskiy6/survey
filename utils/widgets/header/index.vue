@@ -1,8 +1,6 @@
 <template>
   <div class="widget-single-input">
-    <div class="mb-1">
-
-      {{ val.separatorColor }}
+    <div class="">
 
       <h4 :style="{
         textAlign: val.headerAlignment,
@@ -50,7 +48,7 @@ export default {
     headerAlignment: 'left',
     isHeaderItalic: false,
     headerFontSize: 18,
-    headerColor: '#333333',
+    headerColor: '#2F495E',
     belong: 'page',
   },
   // Attribute Meaning Reference widgets/pic/index.vue

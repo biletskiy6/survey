@@ -5,6 +5,18 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0.5rem;
+  padding-left: $settings-gutter;
+  padding-right: $settings-gutter;
+  &.item {
+
+    button {
+      padding: 0;
+    }
+  }
+
+  i {
+    filter: $darkFilter;
+  }
 
   &-row {
     display: flex;

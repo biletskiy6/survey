@@ -26,9 +26,15 @@
 
     <div class="settings-container">
       <vs-divider/>
-      <h5 class="fw-b">Header Font Size:</h5>
-      <vs-divider/>
-      <vs-slider icon="zoom_in" :min="18" :max="50" v-model="headerFontSize"/>
+      <div class="header-font-size">
+        <h5 class="fw-b">Header Font Size:</h5>
+        <vs-divider/>
+        <div class="d-flex ai-c">
+          <vs-slider icon="zoom_in" :min="18" :max="50" v-model="headerFontSize"/>
+          <span class="badge"> {{ headerFontSize }}</span>
+        </div>
+      </div>
+
 
 
       <vs-divider/>
@@ -48,10 +54,24 @@
       </ul>
 
 
-      <vs-divider/>
-      <h5 class="fw-b">Header Color:</h5>
-      <color-picker :width="200" :height="200" v-model="headerColor"></color-picker>
-      <vs-divider/>
+      <div class="header-color mb-2">
+        <vs-divider/>
+        <h5 class="fw-b">Header Color:</h5>
+
+
+        <div style="" class="d-flex jcsb ai-c header-color-info mb-2">
+          <div class="mt-1 header-color-hex"> Hex <span class="badge">{{ headerColor }}</span></div>
+          <vs-button
+            v-clipboard="() => headerColor"
+            v-clipboard:success="clipboardSuccessHandler"
+            type="flat"
+            icon="colorize"
+          ></vs-button>
+        </div>
+
+        <color-picker :width="200" :height="200" v-model="headerColor"></color-picker>
+        <vs-divider/>
+      </div>
       <div class="d-flex ai-c">
         <h5 class="fw-b">Italic Style:</h5>
         <vs-switch vs-type="success" v-model="isHeaderItalic">
@@ -153,6 +173,12 @@
       }
     },
     methods: {
+      clipboardSuccessHandler() {
+        this.$vs.notify({
+          title:`Copied color: ${this.headerColor}`,
+          color: 'primary'
+        });
+      },
       onInput(hue) {
         this.color.hue = hue;
       },

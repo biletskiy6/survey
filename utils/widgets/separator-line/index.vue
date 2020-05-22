@@ -1,7 +1,7 @@
 <template>
   <div
     :style="{
-      border: '1px solid #ccc'
+      borderBottom: '1px solid #ccc'
     }"
   ></div>
 </template>

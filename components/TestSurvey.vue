@@ -2,56 +2,57 @@
   <div class="test-survey">
     <div>
 
-
-      <div v-if="restrictionVisibility" class="password-restriction">
-        <h4 class="mb-1">The survey is password restricted.</h4>
-        <vs-input class="mb-2 inputx" type="password" placeholder="Password" v-model="passwordRestriction"/>
-        <vs-button @click="handlePasswordControlSubmit" color="primary" type="filled">Submit</vs-button>
-      </div>
-
-
-      <div v-if="(accessControlType === 'no' || accessControlPassword && permition)" class="survey">
-
-        <div v-if="isWelcomePageVisible && !surveySubmitted">
-          <WelcomePage @handleStartSurvey="handleStartSurvey" :isDev="false"/>
+      <transition name="fade">
+        <div v-if="restrictionVisibility" class="password-restriction">
+          <h4 class="mb-1">The survey is password restricted.</h4>
+          <vs-input class="mb-2 inputx" type="password" placeholder="Password" v-model="passwordRestriction"/>
+          <vs-button @click="handlePasswordControlSubmit" color="primary" type="filled">Submit</vs-button>
         </div>
+      </transition>
 
-        <div v-if="isWelcomePageVisible && surveySubmitted || !isWelcomePageVisible ">
-          <vs-progress class="mb-3" v-if="statusBar === 'percent'" :percent="(questionIndex / pages.length)*100"
-                       color="primary">
-            primary
-          </vs-progress>
-          <form class="final-survey" @submit.prevent="handleSubmit">
-            <div
-              class="widget-list d-flex fd-c item"
-              :key="val.uuid"
-              v-for="(val, index) in pages[pageCount].widgets"
-            >
-              <component
-                class="widget"
-                :is="val.type"
-                :val="val"
-                :isDev="false"
-                :widgetIdx="index"
-                :formData="formData"
-                :readonly="false"
-                :data-uuid="val.uuid"
-              />
-
+      <transition name="fade">
+        <div v-if="(accessControlType === 'no' || accessControlPassword && permition)" class="survey">
+          <transition name="fade">
+            <div v-if="isWelcomePageVisible && !surveySubmitted">
+              <WelcomePage @handleStartSurvey="handleStartSurvey" :isDev="false"/>
             </div>
+          </transition>
+          <transition name="fade">
+            <div v-if="isWelcomePageVisible && surveySubmitted || !isWelcomePageVisible ">
+              <vs-progress class="mb-3" v-if="statusBar === 'percent'" :percent="(questionIndex / pages.length)*100"
+                           color="primary">
+                primary
+              </vs-progress>
+              <form class="final-survey" @submit.prevent="handleSubmit">
+                <div
+                  class="widget-list d-flex fd-c item"
+                  :key="val.uuid"
+                  v-for="(val, index) in pages[pageCount].widgets"
+                >
+                  <component
+                    class="widget"
+                    :is="val.type"
+                    :val="val"
+                    :isDev="false"
+                    :widgetIdx="index"
+                    :formData="formData"
+                    :readonly="false"
+                    :data-uuid="val.uuid"
+                  />
 
-            <div class="survey-controls">
-              <vs-button v-if="isPrevPage" @click="handlePrevPage">Prev</vs-button>
-              <vs-button v-if="isNextPage" @click="handleNextPage">Next</vs-button>
+                </div>
 
-              <vs-button @click="handleSubmit" v-else>Complete</vs-button>
+                <div class="survey-controls">
+                  <vs-button v-if="isPrevPage" @click="handlePrevPage">Prev</vs-button>
+                  <vs-button v-if="isNextPage" @click="handleNextPage">Next</vs-button>
+
+                  <vs-button @click="handleSubmit" v-else>Complete</vs-button>
+                </div>
+              </form>
             </div>
-          </form>
+          </transition>
         </div>
-
-
-
-      </div>
+      </transition>
     </div>
 
     <div class="privacy-policy">
@@ -68,6 +69,7 @@
 
 <script>
   import WelcomePage from "./WelcomePage";
+
   export default {
     components: {WelcomePage},
     methods: {

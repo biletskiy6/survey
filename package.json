@@ -27,6 +27,7 @@
     "tiptap": "^1.27.1",
     "tiptap-extensions": "^1.29.1",
     "uuid": "^8.0.0",
+    "v-clipboard": "^2.2.3",
     "v-tooltip": "^2.0.3",
     "vee-validate": "^3.3.0",
     "vue-acl": "^4.1.10",

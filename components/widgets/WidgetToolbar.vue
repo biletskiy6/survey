@@ -1,30 +1,28 @@
 <template>
-  <div @click.prevent class="widget-toolbar">
+  <div @click="handleSelect"  class="widget-toolbar">
     <vs-button
       v-tooltip.top-center="tooltipDrag"
-      color="primary"
       type="flat"
       icon="drag_indicator"
       class="btn-drag"
+      color="primary"
     ></vs-button>
     <vs-button
       v-tooltip.top-center="tooltipDelete"
-      @click="handleDelete"
-      color="danger"
+      @click.stop="handleDelete"
       type="flat"
       icon="delete"
     ></vs-button>
     <vs-button
       v-tooltip.top-center="tooltipCopy"
-      @click="handleCopy"
-      color="primary"
+      @click.stop="handleCopy"
       type="flat"
       icon="file_copy"
     ></vs-button>
 
     <vs-button
       v-tooltip.top-center="tooltipSelect"
-      @click="handleSelect"
+      @click.stop="handleSelect"
       type="flat"
       icon="touch_app"
     ></vs-button>

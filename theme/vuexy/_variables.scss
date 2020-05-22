@@ -1,11 +1,18 @@
 /*========================================================
+        Filters
+=========================================================*/
+
+$darkFilter: invert(24%) sepia(51%) saturate(400%) hue-rotate(164deg) brightness(94%) contrast(91%);
+
+/*========================================================
         SPACING
 =========================================================*/
 
 $spacer: 2.2rem;
 $spacer-sm: ($spacer / 2);
 $spacer-lg: ($spacer * 2);
-
+$material-padding-gutter: 24px;
+$settings-gutter: 16px;
 
 
 /*========================================================
@@ -18,7 +25,7 @@ $danger: #EA5455;
 $warning: #FF9F43;
 $dark: #1E1E1E;
 $grey: #b8c2cc;
-$grey-2: #F4F7F8;
+$grey-2: #fcfcfc;
 $grey-3: #F0F3F4;
 $grey-light: #dae1e7;
 $white: #fff;
@@ -63,7 +70,7 @@ $line-height-base: 1.625rem !default;
 $headings-font-family: inherit !default;
 $headings-font-weight: 500 !default;
 $headings-line-height: 1.2 !default;
-$headings-color: #2c2c2c;
+$headings-color: #2F495E;
 $headings-margin-bottom: ($spacer / 2) !default;
 
 $font-weight-light: 300;
@@ -73,7 +80,7 @@ $font-weight-bold: 700;
 $font-weight-base: $font-weight-normal;
 $line-height-base: 1.45;
 
-$content-color: #333;
+$content-color: #2F495E;
 $theme-background: #fafafa;
 
 
@@ -102,5 +109,5 @@ $theme-dark-text-color: #c2c6dc;
 $theme-dark-heading-color: #ebeefd;
 // $theme-dark-heading-color: #C9CAD2;
 $theme-dark-border-color: #414561;
-$theme-light-border-color: #eee;
+$theme-light-border-color: #DFDFDF;
 $theme-dark-shadow-color: #0C112E;

@@ -15,7 +15,6 @@
             <h5 class="fw-m">Option {{ index + 1}}</h5>
             <vs-button
               @click="handleDelete(opt.id)"
-              color="danger"
               type="flat"
               icon="delete"
             ></vs-button>

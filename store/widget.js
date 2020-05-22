@@ -12,7 +12,6 @@ const getWidgets = (state) => {
 export const state = () => ({
   uuid: null,
   welcomePageWidgets: [],
-
   widgets: [],
   activeElement: {},
   activePageUuid: null,
@@ -57,6 +56,7 @@ export const mutations = {
     state.activeElement = state.welcomePageWidgets.find(
       w => w.uuid === state.welcomePageWidgets[state.welcomePageWidgets.length - 1].uuid
     );
+    state.uuid = state.welcomePageWidgets[state.welcomePageWidgets.length - 1].uuid;
   },
 
   delete(state, widget) {

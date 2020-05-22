@@ -1,59 +1,63 @@
 <template>
   <div class="welcome-page">
-
-    <h2 class="fw-b mb-3" v-if="isDev">Welcome Page</h2>
-
-    <draggable
-      v-if="welcomePageWidgets.length"
-      v-model="welcomePageWidgets"
-      @start="isDragging = true"
-      @end="isDragging = false"
-      draggable=".item"
-      handle=".btn-drag"
-    >
-      <transition-group type="transition" name="flip-list">
-        <div
-          class="widget-list d-flex fd-c item"
-
-          :key="val.uuid"
-          v-for="(val, index) in welcomePageWidgets"
-        >
-          <WidgetToolbar v-if="isDev" :widget="val"/>
-          <component
-            class="widget"
-            @click.native="handleClick(val)"
-            :is="val.type"
-            :isWelcomePage="true"
-            :isDev="isDev"
-            :widgetIdx="index"
-            :val="val"
-            :formData="formData"
-            :readonly="true"
-            :data-uuid="val.uuid"
-          />
-        </div>
-      </transition-group>
-    </draggable>
+    <div class="welcome-page-container">
 
 
-    <vs-dropdown v-if="isDev">
-      <vs-button class="btn-drop"  color="primary" icon="more_horiz"></vs-button>
-      <vs-dropdown-menu>
-        <vs-dropdown-item
-          v-for="item in widgets"
-          v-if="item.name === 'header-widget' || item.name === 'text-editor' "
-          :key="item.name"
-          @click="handleAddWidget(item)"
-        >
-         {{ item.title }}
-        </vs-dropdown-item>
-      </vs-dropdown-menu>
-    </vs-dropdown>
+      <h2 class="fw-b mb-3" v-if="isDev">Welcome Page</h2>
+
+      <draggable
+        class="w-100"
+        v-if="welcomePageWidgets.length"
+        v-model="welcomePageWidgets"
+        @start="isDragging = true"
+        @end="isDragging = false"
+        draggable=".item"
+        handle=".btn-drag"
+      >
+        <transition-group type="transition" name="flip-list">
+
+          <div
+            class="widget-list d-flex fd-c item"
+            :class="{ active: id === val.uuid }"
+            :key="val.uuid"
+            v-for="(val, index) in welcomePageWidgets"
+          >
+
+            <WidgetToolbar v-if="isDev" :widget="val"/>
+            <component
+              class="widget"
+              @click.native="handleClick(val)"
+              :is="val.type"
+              :isWelcomePage="true"
+              :isDev="isDev"
+              :widgetIdx="index"
+              :val="val"
+              :formData="formData"
+              :readonly="true"
+              :data-uuid="val.uuid"
+            />
+          </div>
+        </transition-group>
+      </draggable>
 
 
+      <vs-dropdown v-if="isDev">
+          <vs-button class="mt-1 btn-drop" color="primary" icon="more_horiz"></vs-button>
+        <vs-dropdown-menu>
+          <vs-dropdown-item
+            v-for="item in widgets"
+            v-if="item.name === 'header-widget' || item.name === 'text-editor' "
+            :key="item.name"
+            @click="handleAddWidget(item)"
+          >
+            {{ item.title }}
+          </vs-dropdown-item>
+        </vs-dropdown-menu>
+      </vs-dropdown>
 
-    <vs-button @click="$emit('handleStartSurvey', $event) " v-if="!isDev"> Start Survey </vs-button>
 
+      <vs-button @click="$emit('handleStartSurvey', $event) " v-if="!isDev"> Start Survey</vs-button>
+    </div>
   </div>
 </template>
 
@@ -61,6 +65,7 @@
   import WidgetToolbar from '@/components/widgets/WidgetToolbar';
   import draggable from 'vuedraggable';
   import widget from '@/utils/widget-plugin';
+
   export default {
     name: "WelcomePage",
     props: ['isDev'],
@@ -99,6 +104,14 @@
       }
     },
     computed: {
+      id() {
+        return this.$store.getters['widget/uuid'];
+      },
+
+      welcomePageActiveId() {
+        return this.$store.getters['widget/welcomePageActiveId']
+      },
+
       welcomePageWidgets: {
         get() {
           return this.$store.getters['widget/welcomePageWidgets'];
@@ -144,11 +157,5 @@
 </script>
 
 <style scoped>
-  .welcome-page {
-    margin: 0 15px;
-    padding: 15px;
-    border: 1px solid #eee;
-    border-radius: 4px;
-    text-align: center;
-  }
+
 </style>

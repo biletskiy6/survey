@@ -18,9 +18,9 @@
       >
         <vs-button
           class="btn-drag"
-          color="primary"
+          color="dark"
           type="flat"
-          icon="list"
+          icon="drag_indicator"
         ></vs-button>
         <!-- <input
             @input="updateMultipleChoiceCheckedRow(row.id)"
@@ -36,7 +36,7 @@
           type="text"
         />
         <vs-button
-          color="danger"
+          color="dark"
           @click="handleDeleteQuestionRow(row.id)"
           type="flat"
           icon="delete"
@@ -45,8 +45,8 @@
     </draggable>
 
     <div class="d-flex ai-c">
-      <vs-button @click="handleAddQuestionRow" color="primary" type="line"
-                 icon="add"></vs-button>
+      <vs-button @click="handleAddQuestionRow" color="" type="flat"
+                 icon="add_circle"></vs-button>
     </div>
 
 
