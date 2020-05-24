@@ -11,10 +11,14 @@ const install = (Vue, config = {}) => {
 
   if (install.installed) return
 
-
-  widgets = Object.assign({}, {}, {
+  widgets = {
     ...AppWidgets,
-  });
+  }
+
+
+  // widgets = Object.assign({}, {}, {
+  //   ...AppWidgets,
+  // });
 
   // if(window.location.href.indexOf("constructor/text-only") != -1){
   //     widgets = Object.assign({}, {}, {

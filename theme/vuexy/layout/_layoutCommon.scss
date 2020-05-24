@@ -16,6 +16,24 @@ body {
   transition: background-color 0.3s ease;
 }
 
+
+.vs-circle-slider.vs-circles-slider.vs-slider--circles.vs-slider--circle {
+  left: 0;
+}
+
+.fadeHeight-enter-active,
+.fadeHeight-leave-active {
+  transition: all 0.3s;
+  max-height: 500px;
+}
+.fadeHeight-enter,
+.fadeHeight-leave-to
+{
+  opacity: 0;
+  max-height: 0px;
+}
+
+
 .material-icons {
   font-family: "Material Icons Two Tone";
 }
@@ -78,6 +96,12 @@ ul {
 .mt-1 {
   margin-top: 1rem;
 }
+.mt-2 {
+  margin-top: 2rem;
+}
+.mt-3 {
+  margin-top: 3rem;
+}
 .mb-2 {
   margin-bottom: 1rem;
 }
@@ -86,6 +110,9 @@ ul {
 }
 .mr-1 {
   margin-right: 1rem;
+}
+.ml-1 {
+  margin-left: 1rem;
 }
 
 .tac {

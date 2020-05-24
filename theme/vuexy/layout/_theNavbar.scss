@@ -38,11 +38,17 @@
     i {
       font-size: 20px;
       line-height: 0;
+      filter: $darkFilter;
+
     }
   }
   a.nuxt-link-active {
     background: linear-gradient(118deg,rgba($primary,1),rgba($primary,.7));
     color: #fff;
+    i {
+      filter: $whiteFilter;
+      color: #000;
+    }
 
   }
 }

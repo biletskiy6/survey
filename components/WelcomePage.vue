@@ -4,6 +4,9 @@
 
 
       <h2 class="fw-b mb-3" v-if="isDev">Welcome Page</h2>
+      <transition name="fadeHeight">
+        <h4 v-if="!welcomePageWidgets.length">Welcome page is empty now. Add needed widgets or disable it in the settings</h4>
+      </transition>
 
       <draggable
         class="w-100"
@@ -18,7 +21,7 @@
 
           <div
             class="widget-list d-flex fd-c item"
-            :class="{ active: id === val.uuid }"
+            :class="{ active: isDev && id === val.uuid }"
             :key="val.uuid"
             v-for="(val, index) in welcomePageWidgets"
           >
@@ -126,7 +129,11 @@
     },
     methods: {
       handleClick(val) {
-        this.$store.commit('widget/select', val);
+
+        if(this.isDev) {
+          this.$store.commit('widget/select', val);
+        }
+
       },
       handleAddWidget(item) {
         this.$store.commit('widget/addWelcomePageWidget', {

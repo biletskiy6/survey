@@ -6,17 +6,33 @@
     </div>
 
     <vs-input
-      v-model="formData[val.uuid]"
+      v-model="value"
       :readonly="readonly"
+      :state="$v.value.$error ? false : null"
       class="inputx"
     />
+    <p v-show="$v.value.$dirty && !$v.value.required">
+      The email field is required!
+    </p>
+
+<!--    <div>-->
+<!--      <vs-textarea-->
+<!--              :readonly="readonly"-->
+<!--              :width="val.textarea.width"-->
+<!--              v-show="val.textarea.isVisible"-->
+<!--      />-->
+<!--    </div>-->
+
   </div>
 </template>
 
 <script>
 
+
 import WidgetToolbar from '@/components/widgets/WidgetToolbar';
 import panel from './style';
+import { required } from 'vuelidate/lib/validators';
+
 const WIDGET_NAME = 'braid-txt';
 export default {
   name: WIDGET_NAME,
@@ -25,11 +41,23 @@ export default {
   title: 'Text',
   panel,
 
+
+  touch () {
+    this.$v.$touch()
+  },
+
   data() {
+
     return {
       title: '',
       txt: '',
     };
+  },
+
+  validations: {
+    value: {
+      required
+    }
   },
 
   setting: {
@@ -40,6 +68,17 @@ export default {
     questionTitle: 'Question Title',
     questionDescription: '',
     belong: 'page',
+    textarea: {
+      isVisible: false,
+      width: '100%',
+      widthOptions: [
+        {label: 'Size: 25%', value: '25%'},
+        {label: 'Size: 50%', value: '50%'},
+        {label: 'Size: 75%', value: '75%'},
+        {label: 'Size: 100%', value: '100%'}
+      ],
+      text: ''
+    },
   },
   // Attribute Meaning Reference widgets/pic/index.vue
   props: [
@@ -57,7 +96,23 @@ export default {
   components: {
     WidgetToolbar
   },
+
+  computed: {
+    value: {
+      get() {
+        return this.$store.getters['survey/answerValue'](this.val.uuid);
+      },
+      set(value) {
+        this.$store.commit('survey/updateAnswer', {
+          value,
+          uuid: this.val.uuid
+        });
+      }
+    }
+  },
+
   methods: {
+
     handleSelect() {
     },
     handleQuestionEdit() {

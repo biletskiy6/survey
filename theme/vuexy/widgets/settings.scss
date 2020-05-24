@@ -1,8 +1,17 @@
 
 .settings {
+  height: 100%;
+  padding: 16px;
+  background: #fff;
   &-row {
     display: flex;
     align-items: center;
+  }
+}
+
+.setting-opt-access {
+  .setting-item {
+    margin-right: 16px;
   }
 }
 

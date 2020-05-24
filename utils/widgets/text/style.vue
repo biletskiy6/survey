@@ -3,6 +3,7 @@
 
     <BaseSettings :activeElement="activeElement" />
 
+<!--    <AdditionalTextbox :activeElement="activeElement" />-->
 
 
 
@@ -13,12 +14,14 @@
 <script>
 
   import BaseSettings from "@/components/widgets/BaseSettings";
+  import AdditionalTextbox from "@/components/widgets/AdditionalTextbox";
 
   export default {
     name: 'braid-txt-style',
     props: ['activeElement'],
     components: {
-      BaseSettings
+      BaseSettings,
+      AdditionalTextbox
     },
     filters: {
       toFixed: function (data) {

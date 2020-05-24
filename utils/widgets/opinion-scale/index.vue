@@ -8,10 +8,10 @@
 
     <div class="scales d-flex">
       <vs-radio
-        v-model="formData"
+              :disabled="isDev"
         class="d-flex fd-c"
         v-for="(scale, index) in val.scales"
-        :key="index"
+        :key="scale.id"
         v-show="scale.isVisible"
         :vs-name="val.uuid"
         @change="handleScale($event)"
@@ -46,7 +46,20 @@
     computed: {
       scaleNumber() {
         return this.val.scaleNumber;
-      }
+      },
+      computed: {
+        value: {
+          // get() {
+          //   return this.$store.getters['survey/opinionValue'](this.val.uuid);
+          // },
+          // set(value) {
+          //   this.$store.commit('survey/updateOpinionValue', {
+          //     value,
+          //     uuid: this.val.uuid
+          //   });
+          // }
+        }
+      },
     },
     setting: {
       type: WIDGET_NAME,
@@ -91,7 +104,7 @@
       belong: 'page'
     },
     // Attribute Meaning Reference widgets/pic/index.vue
-    props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid', 'widgetIdx', 'readonly', 'formData'],
+    props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid', 'widgetIdx', 'readonly', 'formData', 'isDev'],
     components: {
       WidgetToolbar
     },
