@@ -47,10 +47,14 @@
     computed: {
       rankingRows: {
         get() {
-          return this.$store.getters['widget/rankingRows'];
+          return this.$store.getters['widget/rankingRows'](this.val.uuid);
         },
         set(value) {
-          this.$store.commit('widget/updateRankingRows', value);
+
+          this.$store.commit('widget/updateRankingRows', {
+            questionId: this.val.uuid,
+            value
+          });
         }
       }
     },

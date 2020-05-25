@@ -203,10 +203,20 @@ export const mutations = {
     // Ranking
     // ======================================================================================
 
-    updateRankingRows(state, value) {
-        if (state.activeElement.rankingRows) {
-            state.activeElement.rankingRows = value;
-        }
+    updateRankingRows(state, payload) {
+
+
+      const widgets = getWidgets(state);
+      const { questionId } = payload;
+
+
+      const widgetToUpdate = widgets.find(w => w.uuid === questionId);
+      widgetToUpdate.rankingRows = payload.value;
+
+
+        // if (state.activeElement.rankingRows) {
+        //     state.activeElement.rankingRows = value;
+        // }
     },
     updateRankingRow(state, value) {
         const elementIndexToUpdate = state.activeElement.rankingRows.findIndex(
@@ -503,6 +513,9 @@ export const mutations = {
     setSeparatorLineHeight(state, value) {
         state.activeElement.separatorLineHeight = Number(value);
     },
+    setRequiredField(state, value) {
+      state.activeElement.isRequired = value;
+    }
 
 
 };
@@ -540,7 +553,11 @@ export const getters = {
     },
     activeElement: state => state.activeElement,
     multipleChoiceRows: state => state.activeElement.choiceRows || [],
-    rankingRows: state => state.activeElement.rankingRows || [],
+    rankingRows: state => widgetUuid => {
+      const widgets = getWidgets(state);
+      const widget = widgets.find(w => w.uuid === widgetUuid);
+      return widget.rankingRows || [];
+    },
     getSliderStepValue: state => widgetUuid => {
         let widgets = getWidgets(state);
         const widget = widgets.find(w => w.uuid === widgetUuid);
@@ -644,5 +661,6 @@ export const getters = {
     getWidgetHeaderColor: state => state.activeElement.headerColor,
     isWidgetHeaderItalic: state => state.activeElement.isHeaderItalic,
     getSeparatorColor: state => state.activeElement.separatorColor,
-    getSeparatorLineHeight: state => state.activeElement.separatorLineHeight
+    getSeparatorLineHeight: state => state.activeElement.separatorLineHeight,
+    isRequired: state  => state.activeElement.isRequired
 };

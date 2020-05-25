@@ -1,9 +1,9 @@
 <template>
-  <div
-    :style="{
-      borderBottom: '1px solid #ccc'
-    }"
-  ></div>
+  <div v-if="val.separatorLine" :style="{
+        borderBottom: `${val.separatorLineHeight}px solid ${val.separatorColor}`,
+        height: `${val.separatorLineHeight}px`,
+        backgroundColor: `${val.separatorColor}`
+      }"></div>
 </template>
 
 <script>
@@ -36,6 +36,9 @@ export default {
     isChild: true,
     dragable: true,
     resizable: true,
+    separatorLine: true,
+    separatorColor: '#eeeeee',
+    separatorLineHeight: 1,
     text: 'Paste your text here',
     questionTitle: 'Question Title',
     questionDescription: '',

@@ -3,6 +3,7 @@
     <BaseSettings :activeElement="activeElement"/>
     <vs-divider/>
     <AdditionalTextbox :activeElement="activeElement"/>
+    <vs-checkbox v-model="isRequired">Is Required?</vs-checkbox>
 
     <!--    <vs-select-->
 
@@ -43,6 +44,14 @@
             value
           });
         }
+      },
+      isRequired: {
+        get() {
+          return this.$store.getters['widget/isRequired'];
+        },
+        set(value) {
+          this.$store.commit('widget/setRequiredField', value);
+        },
       }
     },
     methods: {

@@ -38,7 +38,7 @@
                                             :isDev="false"
                                             :widgetIdx="index"
                                             :readonly="false"
-                                            ref="myChild"
+                                            ref="widgets"
                                             :data-uuid="val.uuid"
                                             @validate="handleSubmit"
 
@@ -92,16 +92,32 @@
                 this.permition = false;
             },
             handleSubmit() {
+                const widgets = this.$refs.widgets;
+                const errors = [];
+
+                for(let i = 0; i < widgets.length; i++) {
+                  if(widgets[i].val.isRequired) {
+                    if(widgets[i].$v.$invalid) {
+                       errors.push(i);
+                       widgets[i].$v.$touch();
+                    }
+                  }
+                }
 
 
-                console.log(this.$refs.myChild[0]);
+                if(!errors.length) {
+                  alert("OK");
+                }
+
+
+
+
 
                 // if(this.$refs.myChild[0].$v.$invalid) {
                 //     this.$refs.myChild[0].$v.$touch();
                 //     return;
                 // }
 
-                alert("SUBMIT");
 
 
                 // console.log(this.handleValidate());

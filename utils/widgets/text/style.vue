@@ -3,7 +3,13 @@
 
     <BaseSettings :activeElement="activeElement" />
 
-<!--    <AdditionalTextbox :activeElement="activeElement" />-->
+
+
+
+
+    <AdditionalTextbox :activeElement="activeElement" />
+    <vs-checkbox v-model="isRequired">Is Required?</vs-checkbox>
+
 
 
 
@@ -19,6 +25,16 @@
   export default {
     name: 'braid-txt-style',
     props: ['activeElement'],
+    computed: {
+      isRequired: {
+        get() {
+          return this.$store.getters['widget/isRequired'];
+        },
+        set(value) {
+          this.$store.commit('widget/setRequiredField', value);
+        },
+      }
+    },
     components: {
       BaseSettings,
       AdditionalTextbox

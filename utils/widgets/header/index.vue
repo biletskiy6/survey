@@ -1,7 +1,6 @@
 <template>
   <div class="widget-single-input">
     <div class="">
-
       <h4 :style="{
         textAlign: val.headerAlignment,
         fontSize: val.headerFontSize + 'px',
@@ -10,7 +9,7 @@
       }"  class="fw-b">{{ val.questionTitle }}</h4>
       <div v-if="val.separatorLine" :style="{
         marginTop: '10px',
-        border: `${val.separatorLineHeight}px solid ${val.separatorColor}`,
+        borderBottom: `${val.separatorLineHeight}px solid ${val.separatorColor}`,
       }"></div>
     </div>
   </div>

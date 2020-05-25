@@ -16,7 +16,7 @@ export default {
   [slider.name]: slider,
   [ranking.name]: ranking,
   [variable.name]: variable,
-  [separatorLine.name]: separatorLine,
+  // [separatorLine.name]: separatorLine,
   [textEditor.name]: textEditor,
   [header.name]: header,
 };
