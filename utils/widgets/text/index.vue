@@ -22,6 +22,12 @@
     </p>
 
         <div class="mt-1">
+
+          {{ val.uuid }}
+
+
+          {{ additionalTextareaValue }}
+
           <vs-textarea
                   v-model="additionalTextareaValue"
                   :readonly="readonly"
