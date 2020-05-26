@@ -394,6 +394,17 @@ ul {
 // Other
 // ======================================================================================
 
+.vs-textarea:focus {
+  resize: none !important;
+}
+
+.vs__dropdown-option:hover {
+  background: $primary;
+}
+
+.vs__dropdown-option--selected, .vs__dropdown-option--highlight {
+  background: $primary;
+}
 
 .settings-gutter {
   padding-left: $settings-gutter;

@@ -22,6 +22,9 @@
 
     <div>
       <vs-textarea
+        :rows="val.textarea.rows"
+        :label="val.textarea.label"
+        v-model="additionalTextareaValue"
         :readonly="readonly"
         :width="val.textarea.width"
         v-show="val.textarea.isVisible"
@@ -31,6 +34,7 @@
     <div class="helper-text helper-text--error" v-show="$v.scaleValue.$dirty && !$v.scaleValue.required">
      <p> The field is required!</p>
     </div>
+
 
 
   </div>
@@ -54,6 +58,17 @@
       }
     },
     computed: {
+      additionalTextareaValue: {
+        get() {
+          return this.$store.getters['survey/additionalTextareaValue'](this.val.uuid);
+        },
+        set(value) {
+          this.$store.commit('survey/setAdditionalTextareaValue', {
+            questionId: this.val.uuid,
+            textareaValue: value
+          })
+        }
+      },
       scaleNumber() {
         return this.val.scaleNumber;
       },
@@ -96,6 +111,8 @@
       ],
       textarea: {
         isVisible: false,
+        rows: 3,
+        label: null,
         width: '100%',
         widthOptions: [
           {label: 'Size: 25%', value: '25%'},

@@ -17,19 +17,13 @@
       <div class="custom-input">
         {{ row.value }}
       </div>
-
-      <!--            <input-->
-      <!--                    readonly-->
-      <!--                    class="custom-input"-->
-      <!--                    placeholder="Question text"-->
-      <!--                    :data-uuid="row.id"-->
-      <!--                    :value="row.value"-->
-      <!--                    type="text"-->
-      <!--            />-->
     </div>
 
     <div>
       <vs-textarea
+        :rows="val.textarea.rows"
+        :label="val.textarea.label"
+        v-model="additionalTextareaValue"
         :readonly="readonly"
         :width="val.textarea.width"
         v-show="val.textarea.isVisible"
@@ -67,6 +61,17 @@
     },
 
     computed: {
+      additionalTextareaValue: {
+        get() {
+          return this.$store.getters['survey/additionalTextareaValue'](this.val.uuid);
+        },
+        set(value) {
+          this.$store.commit('survey/setAdditionalTextareaValue', {
+            questionId: this.val.uuid,
+            textareaValue: value
+          })
+        }
+      },
       value: {
         get() {
           return [];
@@ -93,6 +98,8 @@
       isRequired: true,
       textarea: {
         isVisible: false,
+        label: null,
+        rows: 3,
         width: '100%',
         widthOptions: [
           {label: 'Size: 25%', value: '25%'},

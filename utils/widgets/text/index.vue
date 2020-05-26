@@ -17,18 +17,12 @@
       :state="$v.value.$error ? false : null"
       class="inputx"
     />
-    <p v-show="$v.value.$dirty && !$v.value.required">
-      The email field is required!
-    </p>
 
         <div class="mt-1">
 
-          {{ val.uuid }}
-
-
-          {{ additionalTextareaValue }}
-
           <vs-textarea
+                  :rows="val.textarea.rows"
+                  :label="val.textarea.label"
                   v-model="additionalTextareaValue"
                   :readonly="readonly"
                   :width="val.textarea.width"
@@ -84,7 +78,9 @@
       isRequired: false,
       textarea: {
         isVisible: false,
+        rows: 3,
         width: '100%',
+        label: "test",
         widthOptions: [
           {label: 'Size: 25%', value: '25%'},
           {label: 'Size: 50%', value: '50%'},

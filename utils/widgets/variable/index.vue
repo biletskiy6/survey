@@ -7,22 +7,32 @@
       <div>
         <h4 class="mb-1">{{ opt.label }}</h4>
         <div v-show="opt.selectedVariableOption === 'textbox'" class="variable-textbox">
-          <input class="custom-input"/>
+          <input :readonly="isDev" @input="updateVariableValues($event, opt.id, opt.label)" class="custom-input"/>
         </div>
         <div v-show="opt.selectedVariableOption === 'dnd-numbers'" class="variable-dnd-numbers">
-          <v-select placeholder="Choose the answer" :options="getVarNumberOptions(opt.id)"></v-select>
+          <v-select @input="updateVariableValues($event, opt.id, opt.label)" placeholder="Choose the answer"
+                    :options="getVarNumberOptions(opt.id)"></v-select>
         </div>
         <div v-show="opt.selectedVariableOption === 'dnd-text'" class="variable-dnd-text">
-          <v-select placeholder="Choose the answer" :options="getVarTextOptions(opt.id)"></v-select>
+          <v-select @input="updateVariableValues($event, opt.id, opt.label)" placeholder="Choose the answer"
+                    :options="getVarTextOptions(opt.id)"></v-select>
         </div>
         <div v-show="opt.selectedVariableOption === 'single-answer'" class="variable-single-answer">
-          <vs-radio class="mb-1" :key="radioOption.id" v-for="radioOption in opt.variableRadioOptions" vs-name="radios1"
-                    vs-value="luis"> {{ radioOption.value }}
+          <vs-radio
+            v-model="variableSingleAnswer"
+            @input="updateVariableValues($event, opt.id, opt.label)"
+            class="mb-1"
+            :key="radioOption.id"
+            :disabled="isDev"
+            v-for="radioOption in opt.variableRadioOptions"
+            vs-name="radios1"
+            :vs-value="radioOption.value"
+          > {{ radioOption.value }}
           </vs-radio>
         </div>
         <div v-show="opt.selectedVariableOption === 'multiple-answer'" class="variable-multiple-answer">
-          <vs-checkbox class="mb-1" :key="checkboxOption.id" v-for="checkboxOption in opt.variableCheckboxOptions"> {{
-            checkboxOption.value }}
+          <vs-checkbox :disabled="isDev" @change="handleVariableMultipleAnswer(checkboxOption, opt.id, opt.label, checkboxOption.id)" class="mb-1" :key="checkboxOption.id"
+                       :value="checkboxOption.isChecked" v-for="checkboxOption in opt.variableCheckboxOptions"> {{ checkboxOption.value }}
           </vs-checkbox>
         </div>
       </div>
@@ -46,8 +56,6 @@
     mounted() {
       // console.log(this.name);
     },
-
-
     data() {
       return {
         title: '',
@@ -56,6 +64,59 @@
         isEdited: false
       };
     },
+
+    computed: {
+      variableSingleAnswer: {
+        get() {
+
+        },
+        set() {
+
+        }
+      },
+      dndText: {
+        get() {
+          return this.$store.getters['survey/answerValue'](this.val.uuid);
+        },
+        set(value) {
+          if (!this.isDev) {
+            this.$store.commit('survey/updateAnswer', {
+              value,
+              uuid: this.val.uuid
+            })
+          }
+
+        },
+      },
+
+      dndNumbers: {
+        get() {
+          return this.$store.getters['survey/answerValue'](this.val.uuid);
+        },
+        set(value) {
+          if (!this.isDev) {
+            this.$store.commit('survey/updateAnswer', {
+              value,
+              uuid: this.val.uuid
+            })
+          }
+
+        },
+      },
+      textboxValue: {
+        get() {
+          return this.$store.getters['survey/answerValue'](this.val.uuid);
+        },
+        set(value) {
+          this.$store.commit('survey/updateVariableWidget', {
+            value,
+            questionId: this.val.uuid
+          });
+        }
+      }
+    },
+
+
     setting: {
       type: WIDGET_NAME,
       isContainer: false,
@@ -85,17 +146,48 @@
             {id: uuidv4(), label: "", value: ""},
           ],
           variableCheckboxOptions: [
-            {id: uuidv4(), label: "", value: ""},
+            {id: uuidv4(), label: "", value: "", isChecked: false},
           ]
         }
       ],
     },
     // Attribute Meaning Reference widgets/pic/index.vue
-    props: ['val', 'h', 'w', 'playState', 'text', 'index', 'uuid', 'widgetIdx'],
+    props: ['val', 'h', 'w', 'playState', 'text', 'index', 'isDev', 'uuid', 'widgetIdx'],
     components: {
       WidgetToolbar
     },
     methods: {
+      updateVariableValues(e, optionId, optionLabel) {
+        if (!this.isDev) {
+          let value = e instanceof InputEvent ? e.target.value : e;
+          this.$store.commit('survey/updateVariableValues', {
+            questionId: this.val.uuid,
+            value,
+            optionId,
+            optionLabel
+          })
+        }
+      },
+      handleVariableMultipleAnswer(row, optionId, optionLabel, checkboxId) {
+        if (!this.isDev) {
+          this.$store.commit('survey/updateVariableMultipleAnswer', {
+            row,
+            optionId,
+            optionLabel,
+            questionId: this.val.uuid,
+            isVariable: true,
+            checkboxId
+          });
+        }
+      },
+      handleScale(value) {
+        if (!this.isDev) {
+          this.$store.commit('survey/setOpinionScaleValue', {
+            questionId: this.val.uuid,
+            value
+          });
+        }
+      },
       getVarTextOptions(id) {
         const element = this.val.variableOptions.find((el) => el.id === id);
         return element.variableSelectOptions;
