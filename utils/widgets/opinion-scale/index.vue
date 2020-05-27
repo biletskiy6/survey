@@ -13,14 +13,17 @@
         class="d-flex fd-c"
         v-for="(scale, index) in val.scales"
         :key="index"
-        vs-name="scaleValue"
-        :vs-value="scale.id"
-        @change="handleScale(scale.id)"
-      >{{ scale.id }}
+        :vs-name="val.uuid"
+        :vs-value="index + startAtZero"
+        @change="handleScale(index + startAtZero)"
+      >{{ index + startAtZero }}
       </vs-radio>
     </div>
 
-    <div>
+
+
+
+    <div class="mt-1">
       <vs-textarea
         :rows="val.textarea.rows"
         :label="val.textarea.label"
@@ -54,10 +57,16 @@
     panel,
     data() {
       return {
-        scaleValue: null
+
       }
     },
     computed: {
+      scaleValue: {
+       get() {
+         return this.$store.getters['survey/scaleValue'](this.val.uuid);
+       },
+        set() {}
+      },
       additionalTextareaValue: {
         get() {
           return this.$store.getters['survey/additionalTextareaValue'](this.val.uuid);
@@ -68,6 +77,9 @@
             textareaValue: value
           })
         }
+      },
+      startAtZero() {
+        return this.val.startAtZero ? 0 : 1;
       },
       scaleNumber() {
         return this.val.scaleNumber;
@@ -86,6 +98,7 @@
       questionDescription: '',
       scaleNumber: 20,
       scaleValue: null,
+      startAtZero: true,
       scales: [
         {id: 0, isChecked: false, isVisible: true},
         {id: 1, isChecked: false, isVisible: true},
@@ -152,13 +165,13 @@
         });
       }
     },
-    watch: {
-      scaleNumber(value) {
-        this.$store.commit("widget/updateScaleNumberCount", {
-          id: this.val.uuid,
-          value
-        });
-      }
-    }
+    // watch: {
+    //   scaleNumber(value) {
+    //     this.$store.commit("widget/updateScaleNumberCount", {
+    //       id: this.val.uuid,
+    //       value
+    //     });
+    //   }
+    // }
   };
 </script>

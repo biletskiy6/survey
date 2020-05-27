@@ -74,6 +74,9 @@
       TestSurvey,
       Settings
     },
+    mounted() {
+      window['aaaa'] = 'aaaa';
+    },
     computed: {
       pageWidgetsLength() {
         return this.$store.getters['widget/pageWidgetsLength'];

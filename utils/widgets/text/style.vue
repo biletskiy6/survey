@@ -7,8 +7,12 @@
 
 
 
-    <AdditionalTextbox :activeElement="activeElement" />
-    <vs-checkbox v-model="isRequired">Is Required?</vs-checkbox>
+
+    <div class="mt-1">
+      <vs-checkbox class="ml-1" v-model="isRequired">Is Required?</vs-checkbox>
+      <AdditionalTextbox :activeElement="activeElement" />
+    </div>
+
 
 
 

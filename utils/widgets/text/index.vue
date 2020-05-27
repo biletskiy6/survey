@@ -35,10 +35,10 @@
 
 <script>
 
-
   import WidgetToolbar from '@/components/widgets/WidgetToolbar';
   import panel from './style';
   import {required} from 'vuelidate/lib/validators';
+
 
   const WIDGET_NAME = 'braid-txt';
   export default {
@@ -80,7 +80,7 @@
         isVisible: false,
         rows: 3,
         width: '100%',
-        label: "test",
+        label: null,
         widthOptions: [
           {label: 'Size: 25%', value: '25%'},
           {label: 'Size: 50%', value: '50%'},

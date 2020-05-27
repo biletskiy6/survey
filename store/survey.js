@@ -44,14 +44,28 @@ export const mutations = {
     const {questionId, optionId, optionLabel, checkboxId, row} = payload;
     let answerToUpdate = state.answers.find(a => a.questionId === questionId);
 
+    console.log(answerToUpdate);
+
     if (!answerToUpdate) {
       state.answers.push({
         questionId,
-        options: {optionId, optionLabel, value: row.value, isChecked: !row.isChecked, checkboxId}
+        additionalTextareaValue: null,
+        options: [{optionId, optionLabel, value: row.value, isChecked: !row.isChecked, checkboxId}]
       })
     } else {
-      const isCheckboxValue = answerToUpdate.options.find(o => o.checkboxId === checkboxId);
-      console.log(isCheckboxValue);
+      const isCheckboxValueExists = answerToUpdate.options.find(o => o.checkboxId === checkboxId);
+      if (!isCheckboxValueExists) {
+        answerToUpdate.options.push({optionId, optionLabel, value: row.value, isChecked: !row.isChecked, checkboxId})
+      } else {
+        isCheckboxValueExists.isChecked = !isCheckboxValueExists.isChecked;
+      }
+
+
+      // const isCheckboxValue = answerToUpdate.options.find(o => o.checkboxId === checkboxId);
+      // console.log(isCheckboxValue);
+
+      // state.answers.options.push({ optionId, optionLabel, value: row.value, isChecked: !row.isChecked, checkboxId  })
+
     }
 
 
@@ -125,7 +139,7 @@ export const mutations = {
 
       if (!answerExists) {
         state.answers.push({
-          questionId, answers: selectedRows
+          questionId, answers: selectedRows, additionalTextareaValue: null
         })
       } else {
         const answerToUpdate = state.answers.find(a => a.questionId === questionId);
@@ -216,8 +230,21 @@ export const mutations = {
     state.answers.push({
       questionId, value, additionalTextareaValue: null,
     })
+  },
+  saveRankingAnswer(state, payload) {
+    const { questionId, rankingRows } = payload;
+
+    const exist = state.answers.find(a => a.questionId === questionId);
+
+    if(!exist) {
+      state.answers.push({ questionId, rankingRows });
+    } else {
+      exist.rankingRows = rankingRows;
+    }
+
+
   }
-};
+ };
 
 
 export const actions = {};
@@ -234,6 +261,19 @@ export const getters = {
     if (question) {
       return question['additionalTextareaValue'];
     }
+  },
+  variableValue: state => (questionId, optionId) => {
+    const question = state.answers.find(q => q.questionId === questionId);
+    console.log(question);
+    if(question && question.options) {
+      const answer = question.options.find(a => a.optionId === optionId);
+      console.log(answer);
+      return '1111111';
+    }
+  },
+  scaleValue: state => questionId => {
+    const question = state.answers.find(q => q.questionId === questionId);
+    if(question) return question.value;
   },
   // opinionScaleValue: (state, getters, rootState) => {
   //   const activeElement = rootState.widget.activeElement;

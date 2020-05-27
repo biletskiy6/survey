@@ -53,7 +53,10 @@
     <vs-divider/>
 
 
-    <AdditionalTextbox :activeElement="activeElement" />
+    <div class="mt-1">
+<!--      <vs-checkbox class="ml-1" v-model="isRequired">Is Required?</vs-checkbox>-->
+      <AdditionalTextbox :activeElement="activeElement" />
+    </div>
 
 <!--    <vs-checkbox class="mb-2" @input="updateTextareaVisibility($event)"-->
 <!--    >Additional text box-->

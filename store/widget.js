@@ -183,11 +183,28 @@ export const mutations = {
   // ======================================================================================
   // Opinion Scale
   // ======================================================================================
-  // updateNumberOfScales(state, {id, value}) {
-  //   const widget = state.widgets.find(w => w.uuid === id);
-  //   widget.scaleNumber = value;
-  // },
-  //
+  updateNumberOfScales(state, {id, value}) {
+    const widgets = getWidgets(state);
+    const widget = widgets.find(w => w.uuid === id);
+
+    console.log(value);
+
+    for(let i = 0; i < widget.scales.length; i++) {
+      widget.scales[i].isVisible = true;
+    }
+
+    for(let i = widget.scales.length; i-- > value.value;) {
+      widget.scales[i].isVisible = !widget.scales[i].isVisible;
+    }
+
+    widget.scaleNumber = value;
+    // widget.scaleNumber = value;
+  },
+
+  setStartAtZero(state, value) {
+    state.activeElement.startAtZero = value;
+  },
+
   // updateScaleNumberCount(state, {id, value}) {
   //   let {scales} = state.widgets.find(w => w.uuid === id);
   //   let items = scales.slice(0, value);
@@ -702,5 +719,6 @@ export const getters = {
   isWidgetHeaderItalic: state => state.activeElement.isHeaderItalic,
   getSeparatorColor: state => state.activeElement.separatorColor,
   getSeparatorLineHeight: state => state.activeElement.separatorLineHeight,
-  isRequired: state => state.activeElement.isRequired
+  isRequired: state => state.activeElement.isRequired,
+  startAtZero: state => state.activeElement.startAtZero,
 };

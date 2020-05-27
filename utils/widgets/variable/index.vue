@@ -7,7 +7,11 @@
       <div>
         <h4 class="mb-1">{{ opt.label }}</h4>
         <div v-show="opt.selectedVariableOption === 'textbox'" class="variable-textbox">
-          <input :readonly="isDev" @input="updateVariableValues($event, opt.id, opt.label)" class="custom-input"/>
+
+          <!--          <input v-model="variableTextboxValue[opt.label]" :readonly="isDev" class="custom-input" type="text">-->
+
+          <input :ref="opt.id" :readonly="isDev"
+                 @input="updateVariableValues($event, opt.id, opt.label)" class="custom-input"/>
         </div>
         <div v-show="opt.selectedVariableOption === 'dnd-numbers'" class="variable-dnd-numbers">
           <v-select @input="updateVariableValues($event, opt.id, opt.label)" placeholder="Choose the answer"
@@ -31,8 +35,11 @@
           </vs-radio>
         </div>
         <div v-show="opt.selectedVariableOption === 'multiple-answer'" class="variable-multiple-answer">
-          <vs-checkbox :disabled="isDev" @change="handleVariableMultipleAnswer(checkboxOption, opt.id, opt.label, checkboxOption.id)" class="mb-1" :key="checkboxOption.id"
-                       :value="checkboxOption.isChecked" v-for="checkboxOption in opt.variableCheckboxOptions"> {{ checkboxOption.value }}
+          <vs-checkbox :disabled="isDev"
+                       @change="handleVariableMultipleAnswer(checkboxOption, opt.id, opt.label, checkboxOption.id)"
+                       class="mb-1" :key="checkboxOption.id"
+                       :value="checkboxOption.isChecked" v-for="checkboxOption in opt.variableCheckboxOptions">
+            {{checkboxOption.value }}
           </vs-checkbox>
         </div>
       </div>
@@ -61,11 +68,19 @@
         title: '',
         inputText: '',
         selectDndText: null,
-        isEdited: false
+        isEdited: false,
       };
     },
 
     computed: {
+      variableTextboxValue: {
+        get(value) {
+          return this.$store.getters['survey/answerValue'](this.val.uuid);
+        },
+        set(value, form) {
+          // this.variableTextbox = value;
+        }
+      },
       variableSingleAnswer: {
         get() {
 
@@ -157,6 +172,9 @@
       WidgetToolbar
     },
     methods: {
+      getVariableValue(questionId, optionId) {
+        this.$store.getters['survey/variableValue'](questionId, optionId);
+      },
       updateVariableValues(e, optionId, optionLabel) {
         if (!this.isDev) {
           let value = e instanceof InputEvent ? e.target.value : e;

@@ -1,18 +1,26 @@
 <template>
   <div>
-    <vs-checkbox v-model="isTextareaVisible" class="mb-2"
+    <vs-checkbox v-model="isTextareaVisible" class="mt-1 ml-1 mb-2"
     >Additional text box
     </vs-checkbox
     >
 
 
     <transition name="fadeHeight">
-      <div v-if="activeElement.textarea.isVisible">
-        <input v-model="textareaWidgetLabel" class="custom-input"/>
+      <div class="settings-gutter" v-if="activeElement.textarea.isVisible">
+        <vs-divider> Textarea label </vs-divider>
+        <input placeholder="Textarea label(placeholder)" v-model="textareaWidgetLabel" class="custom-input mb-1"/>
+        <vs-divider> Textarea width </vs-divider>
         <v-select placeholder="Choose textarea width" v-model="textareaWidgetWidth"
                   :options="activeElement.textarea.widthOptions">
         </v-select>
-        <vs-slider max="15" v-model="textareaWidgetRows"/>
+
+
+        <vs-divider> Textarea rows </vs-divider>
+        <div class="d-flex ai-c">
+          <vs-slider max="15" v-model="textareaWidgetRows"/>
+          <div class="ml-1 badge">{{ textareaWidgetRows }}</div>
+        </div>
       </div>
     </transition>
 

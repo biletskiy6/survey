@@ -5,7 +5,7 @@
       <p>{{ val.questionDescription }}</p>
     </div>
 
-    <draggable v-model="rankingRows" draggable=".item" handle=".btn-drag">
+    <draggable class="ranking-rows" v-model="rankingRows" draggable=".item" handle=".btn-drag">
       <div
         class="item mb-1"
         :key="index"
@@ -15,7 +15,7 @@
           class="btn-drag"
           color="primary"
           type="flat"
-          icon="list"
+          icon="drag_indicator"
         ></vs-button>
         <input
           readonly

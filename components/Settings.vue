@@ -87,7 +87,7 @@
             </div>
 
             <div class="setting-opt">
-                <vs-checkbox v-model="isWelcomePageVisible">Welcome Page Visible Visibility</vs-checkbox>
+                <vs-checkbox v-model="isWelcomePageVisible">Welcome Page Visibility</vs-checkbox>
             </div>
         </div>
     </div>

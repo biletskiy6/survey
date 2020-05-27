@@ -18,7 +18,7 @@
 
         <span v-html="item.icon"></span>
         <span class="menu-caption">
-          {{ item.title }}
+          {{ translateToolbarTitles(item.name) }}
         </span>
       </li>
     </ul>
@@ -42,6 +42,9 @@
       console.log(this.widgets);
     },
     methods: {
+      translateToolbarTitles(title) {
+        return this.$t(`toolbar.${title.toLowerCase()}`);
+      },
       addWidget(e, item) {
         this.$store.dispatch('widget/add', item);
       }
