@@ -1,8 +1,10 @@
 <template>
   <div class="widget-single-input">
-    <div class="mb-1">
+    <div class="widget-header-common mb-1">
       <h4 class="fw-b">{{ val.questionTitle }}</h4>
       <p>{{ val.questionDescription }}</p>
+
+      <vs-icon  v-if="val.isTooltip"  v-tooltip.top-center="tooltipText" icon="info"></vs-icon>
     </div>
 
     <vs-input
@@ -76,6 +78,8 @@
       questionDescription: '',
       belong: 'page',
       isRequired: false,
+      isTooltip: false,
+      tooltipText: '',
       textarea: {
         isVisible: false,
         rows: 3,
@@ -108,6 +112,9 @@
     },
 
     computed: {
+      tooltipText() {
+        return this.val.tooltipText;
+      },
       additionalTextareaValue: {
         get() {
           return this.$store.getters['survey/additionalTextareaValue'](this.val.uuid);

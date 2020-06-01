@@ -8,13 +8,14 @@
         <h4 class="mb-1">{{ opt.label }}</h4>
         <div v-show="opt.selectedVariableOption === 'textbox'" class="variable-textbox">
 
-          <!--          <input v-model="variableTextboxValue[opt.label]" :readonly="isDev" class="custom-input" type="text">-->
+
+<!--                    <input v-model="variableTextboxValue[getKeyForLabel(opt.label)]" :readonly="isDev" class="custom-input" type="text">-->
 
           <input :ref="opt.id" :readonly="isDev"
                  @input="updateVariableValues($event, opt.id, opt.label)" class="custom-input"/>
         </div>
         <div v-show="opt.selectedVariableOption === 'dnd-numbers'" class="variable-dnd-numbers">
-          <v-select @input="updateVariableValues($event, opt.id, opt.label)" placeholder="Choose the answer"
+          <v-select :ref="opt.id" @input="updateVariableValues($event, opt.id, opt.label)" placeholder="Choose the answer"
                     :options="getVarNumberOptions(opt.id)"></v-select>
         </div>
         <div v-show="opt.selectedVariableOption === 'dnd-text'" class="variable-dnd-text">
@@ -61,7 +62,7 @@
     title: 'Variable',
     panel,
     mounted() {
-      // console.log(this.name);
+      this.getVariableValues();
     },
     data() {
       return {
@@ -69,18 +70,11 @@
         inputText: '',
         selectDndText: null,
         isEdited: false,
+        variableTextboxValue: {}
       };
     },
 
     computed: {
-      variableTextboxValue: {
-        get(value) {
-          return this.$store.getters['survey/answerValue'](this.val.uuid);
-        },
-        set(value, form) {
-          // this.variableTextbox = value;
-        }
-      },
       variableSingleAnswer: {
         get() {
 
@@ -172,6 +166,32 @@
       WidgetToolbar
     },
     methods: {
+      getVariableValues() {
+        const questionId = this.val.uuid;
+        let variableOptionsIds = [];
+        let variableOptions = this.val.variableOptions;
+
+        for(let i = 0; i < variableOptions.length; i++) {
+          variableOptionsIds.push(variableOptions[i].id);
+        }
+
+       const values = this.$store.getters['survey/getVariableValues'](questionId,variableOptionsIds)
+
+
+        if(values.length) {
+          let i = 0;
+          for(let ref in this.$refs) {
+            console.log(ref);
+            this.$refs[ref][0].value = values[i];
+            i++;
+          }
+        }
+
+
+      },
+      getKeyForLabel(label) {
+        return label.replace(/ /g, "_").toLowerCase();
+      },
       getVariableValue(questionId, optionId) {
         this.$store.getters['survey/variableValue'](questionId, optionId);
       },
@@ -239,6 +259,14 @@
           value: text
         });
       }
-    }
+    },
+    watch: {
+      variableTextboxValue(value) {
+        this.$store.commit('survey/setVariableTextboxValue', {
+          questionId: this.val.uuid,
+          value
+        })
+      }
+    },
   };
 </script>

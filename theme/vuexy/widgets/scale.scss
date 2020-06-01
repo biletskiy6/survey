@@ -1,4 +1,5 @@
 .scales {
+  position: relative;
   .con-vs-radio {
     margin-right: 10px;
     &:last-child {
@@ -8,5 +9,17 @@
   .vs-radio--label {
     order: -1;
     margin-left: 0;
+  }
+}
+
+.scales-assistant {
+  position: absolute;
+  top: -30px;
+  filter: $darkFilter;
+  &--down {
+    left: 0;
+  }
+  &--up {
+    right: 0;
   }
 }

@@ -10,6 +10,8 @@
 
     <div class="mt-1">
       <vs-checkbox class="ml-1" v-model="isRequired">Is Required?</vs-checkbox>
+      <vs-checkbox class="mt-1 ml-1" v-model="invertScales">Invert Scales?</vs-checkbox>
+      <vs-checkbox class="mt-1 ml-1" v-model="visualAssistant">Visual Assistant?</vs-checkbox>
       <AdditionalTextbox :activeElement="activeElement" />
     </div>
 
@@ -42,7 +44,6 @@
       this.generateScaleCountOptions();
     },
 
-
     data() {
       return {
         scaleCountOptions: []
@@ -53,6 +54,22 @@
       AdditionalTextbox
     },
     computed: {
+      visualAssistant: {
+        get() {
+          return this.$store.getters['widget/visualAssistant'];
+        },
+        set(value) {
+          this.$store.commit('widget/setVisualAssistant', value);
+        },
+      },
+      invertScales: {
+        get() {
+          return this.$store.getters['widget/invertScales'];
+        },
+        set(value) {
+          this.$store.commit('widget/invertScales', value);
+        }
+      },
       scaleCount: {
         get() {
 

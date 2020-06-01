@@ -5,11 +5,10 @@
 
 
 
-
-
-
     <div class="mt-1">
       <vs-checkbox class="ml-1" v-model="isRequired">Is Required?</vs-checkbox>
+      <vs-checkbox class="ml-1 mt-1" v-model="isTooltip">Help Tooltip</vs-checkbox>
+      <vs-textarea v-if="isTooltip" class="mt-1 mb-1" label="Tooltip Text" v-model="tooltipText" />
       <AdditionalTextbox :activeElement="activeElement" />
     </div>
 
@@ -30,6 +29,22 @@
     name: 'braid-txt-style',
     props: ['activeElement'],
     computed: {
+      tooltipText: {
+        get() {
+          return this.$store.getters['widget/getTooltipText'];
+        },
+        set(value) {
+          this.$store.commit('widget/setTooltipText', value);
+        },
+      },
+      isTooltip: {
+        get() {
+          return this.$store.getters['widget/isTooltip'];
+        },
+        set(value) {
+          this.$store.commit('widget/setTooltip', value);
+        },
+      },
       isRequired: {
         get() {
           return this.$store.getters['widget/isRequired'];

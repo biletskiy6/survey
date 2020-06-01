@@ -569,6 +569,20 @@ export const mutations = {
   },
   setRequiredField(state, value) {
     state.activeElement.isRequired = value;
+  },
+  setTooltip(state, value) {
+    state.activeElement.isTooltip = value;
+  },
+  setTooltipText(state, value) {
+    state.activeElement.tooltipText = value;
+  },
+
+  invertScales(state, value) {
+    state.activeElement.invertScales = value;
+  },
+
+  setVisualAssistant(state, value) {
+    state.activeElement.visualAssistant = value;
   }
 
 
@@ -720,5 +734,9 @@ export const getters = {
   getSeparatorColor: state => state.activeElement.separatorColor,
   getSeparatorLineHeight: state => state.activeElement.separatorLineHeight,
   isRequired: state => state.activeElement.isRequired,
+  isTooltip: state => state.activeElement.isTooltip,
+  getTooltipText: state => state.activeElement.tooltipText,
   startAtZero: state => state.activeElement.startAtZero,
+  invertScales: state => state.activeElement.invertScales,
+  visualAssistant: state => state.activeElement.visualAssistant
 };

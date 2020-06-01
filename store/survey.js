@@ -232,19 +232,29 @@ export const mutations = {
     })
   },
   saveRankingAnswer(state, payload) {
-    const { questionId, rankingRows } = payload;
+    const {questionId, rankingRows} = payload;
 
     const exist = state.answers.find(a => a.questionId === questionId);
 
-    if(!exist) {
-      state.answers.push({ questionId, rankingRows });
+    if (!exist) {
+      state.answers.push({questionId, rankingRows});
     } else {
       exist.rankingRows = rankingRows;
     }
+  },
 
+  setVariableTextboxValue(state, payload) {
+    const { questionId, value } = payload;
+    const copy = value;
+    console.log(value);
+
+    const answer = state.answers.find(a => a.questionId === questionId);
+    if(!answer) {
+      state.answers.push({ questionId, copy });
+    }
 
   }
- };
+};
 
 
 export const actions = {};
@@ -265,7 +275,7 @@ export const getters = {
   variableValue: state => (questionId, optionId) => {
     const question = state.answers.find(q => q.questionId === questionId);
     console.log(question);
-    if(question && question.options) {
+    if (question && question.options) {
       const answer = question.options.find(a => a.optionId === optionId);
       console.log(answer);
       return '1111111';
@@ -273,7 +283,22 @@ export const getters = {
   },
   scaleValue: state => questionId => {
     const question = state.answers.find(q => q.questionId === questionId);
-    if(question) return question.value;
+    if (question) return question.value;
+  },
+  getVariableValues: state => (questionId, variableOptionsIds) => {
+    const answer = state.answers.find(a => a.questionId === questionId);
+
+    console.log(answer);
+
+    const values = [];
+    if(answer && answer.options) {
+        for(let i = 0; i < answer.options.length; i++) {
+          if(answer.options[i].optionId === variableOptionsIds[i]) {
+            values.push(answer.options[i].value)
+          }
+        }
+    }
+    return values;
   },
   // opinionScaleValue: (state, getters, rootState) => {
   //   const activeElement = rootState.widget.activeElement;

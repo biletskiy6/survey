@@ -5,22 +5,24 @@
       <p>{{ val.questionDescription }}</p>
     </div>
 
-    <div class="scales d-flex">
-      <vs-radio
-        v-model="scaleValue"
-        :disabled="isDev"
-        v-if="scale.isVisible"
-        class="d-flex fd-c"
-        v-for="(scale, index) in val.scales"
-        :key="index"
-        :vs-name="val.uuid"
-        :vs-value="index + startAtZero"
-        @change="handleScale(index + startAtZero)"
-      >{{ index + startAtZero }}
-      </vs-radio>
+    <div class="scales">
+      <vs-icon v-if="val.visualAssistant" class="scales-assistant scales-assistant--down"  :icon="val.invertScales ? 'thumb_up' : 'thumb_down'" ></vs-icon>
+      <div class="d-flex jcsb">
+        <vs-radio
+          v-model="scaleValue"
+          :disabled="isDev"
+          v-if="scale.isVisible"
+          class="d-flex fd-c"
+          v-for="(scale, index) in scales"
+          :key="index"
+          :vs-name="val.uuid"
+          :vs-value="scale.id + startAtZero"
+          @change="handleScale(scale.id + startAtZero)"
+        >{{ (scale.id + startAtZero) }}
+        </vs-radio>
+      </div>
+      <vs-icon v-if="val.visualAssistant" class="scales-assistant scales-assistant--up" :icon="val.invertScales ? 'thumb_down' : 'thumb_up'"></vs-icon>
     </div>
-
-
 
 
     <div class="mt-1">
@@ -35,10 +37,8 @@
     </div>
 
     <div class="helper-text helper-text--error" v-show="$v.scaleValue.$dirty && !$v.scaleValue.required">
-     <p> The field is required!</p>
+      <p> The field is required!</p>
     </div>
-
-
 
   </div>
 </template>
@@ -56,16 +56,31 @@
     title: 'Opinion Scale',
     panel,
     data() {
-      return {
-
-      }
+      return {}
     },
     computed: {
+      scales() {
+        if (this.val.invertScales) {
+          return this.val.scales.slice().reverse();
+        }
+        return this.val.scales;
+      },
+
+      visualAssistant: {
+        get() {
+          // return this.$s
+        },
+        set() {
+
+        }
+      },
+
       scaleValue: {
-       get() {
-         return this.$store.getters['survey/scaleValue'](this.val.uuid);
-       },
-        set() {}
+        get() {
+          return this.$store.getters['survey/scaleValue'](this.val.uuid);
+        },
+        set() {
+        }
       },
       additionalTextareaValue: {
         get() {
@@ -97,6 +112,8 @@
       questionTitle: '',
       questionDescription: '',
       scaleNumber: 20,
+      visualAssistant: false,
+      invertScales: false,
       scaleValue: null,
       startAtZero: true,
       scales: [

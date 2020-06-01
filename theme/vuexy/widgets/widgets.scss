@@ -2,6 +2,18 @@
 
 }
 
+.widget-header-common {
+  position: relative;
+  padding-right: 5px;
+  i {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    filter: $darkFilter;
+  }
+}
+
 .pages-wrapper {
   display: flex;
   align-items: flex-end;
