@@ -5,16 +5,12 @@
 
 
 
-    <div class="mt-1">
-      <vs-checkbox class="ml-1" v-model="isRequired">Is Required?</vs-checkbox>
-      <vs-checkbox class="ml-1 mt-1" v-model="isTooltip">Help Tooltip</vs-checkbox>
-      <vs-textarea v-if="isTooltip" class="mt-1 mb-1" label="Tooltip Text" v-model="tooltipText" />
+    <div class="settings-gutter mt-1">
+      <vs-checkbox v-model="isRequired">Is Required?</vs-checkbox>
+      <vs-checkbox class="mt-1" v-model="isTooltip">Help Tooltip</vs-checkbox>
+      <vs-textarea v-if="isTooltip" class="mt-1  mb-1" label="Tooltip Text" v-model="tooltipText" />
       <AdditionalTextbox :activeElement="activeElement" />
     </div>
-
-
-
-
 
 
   </div>

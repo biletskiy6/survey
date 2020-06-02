@@ -160,7 +160,6 @@
         }
       ],
     },
-    // Attribute Meaning Reference widgets/pic/index.vue
     props: ['val', 'h', 'w', 'playState', 'text', 'index', 'isDev', 'uuid', 'widgetIdx'],
     components: {
       WidgetToolbar
@@ -178,14 +177,15 @@
        const values = this.$store.getters['survey/getVariableValues'](questionId,variableOptionsIds)
 
 
-        if(values.length) {
-          let i = 0;
-          for(let ref in this.$refs) {
-            console.log(ref);
-            this.$refs[ref][0].value = values[i];
-            i++;
-          }
-        }
+        return '...';
+
+        // if(values.length) {
+        //   let i = 0;
+        //   for(let ref in this.$refs) {
+        //     this.$refs[ref][0].value = values[i];
+        //     i++;
+        //   }
+        // }
 
 
       },

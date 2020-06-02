@@ -277,8 +277,7 @@ export const getters = {
     console.log(question);
     if (question && question.options) {
       const answer = question.options.find(a => a.optionId === optionId);
-      console.log(answer);
-      return '1111111';
+      return '...';
     }
   },
   scaleValue: state => questionId => {
@@ -287,9 +286,6 @@ export const getters = {
   },
   getVariableValues: state => (questionId, variableOptionsIds) => {
     const answer = state.answers.find(a => a.questionId === questionId);
-
-    console.log(answer);
-
     const values = [];
     if(answer && answer.options) {
         for(let i = 0; i < answer.options.length; i++) {
@@ -300,13 +296,5 @@ export const getters = {
     }
     return values;
   },
-  // opinionScaleValue: (state, getters, rootState) => {
-  //   const activeElement = rootState.widget.activeElement;
-  //   return activeElement.scaleValue;
-  // },
-  //   opinionValue: state => uuid => {
-  //       const answer = state.opinionScale.find(a => a.uuid === uuid);
-  //       if(answer) return answer.value;
-  //       return null;
-  //   }
+  answers: state => state.answers
 };

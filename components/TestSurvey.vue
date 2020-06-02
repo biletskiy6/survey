@@ -96,32 +96,27 @@
 
 
         if (!this.validateForm(widgets)) {
+
         }
 
-
-        // if(this.$refs.myChild[0].$v.$invalid) {
-        //     this.$refs.myChild[0].$v.$touch();
-        //     return;
-        // }
-
-
-        // console.log(this.handleValidate());
+        console.log(this.$store.getters['survey/answers']);
       },
       validateForm(widgets) {
 
         const errors = [];
 
         for (let i = 0; i < widgets.length; i++) {
-          if (widgets[i].val.isRequired) {
-            if (widgets[i].$v.$invalid) {
+          const widget = widgets[i];
+          if (widget.val.isRequired) {
+            if (widget.$v.$invalid) {
               errors.push(i);
-              widgets[i].$v.$touch();
+              widget.$v.$touch();
             }
           }
 
           if (widgets[i].val.type === 'ranking') {
-            const questionId = widgets[i].val.uuid;
-            const rankingRows = widgets[i].val.rankingRows;
+            const questionId = widget.val.uuid;
+            const rankingRows = widget.val.rankingRows;
             this.$store.commit('survey/saveRankingAnswer', {
               rankingRows,
               questionId
@@ -234,7 +229,6 @@
     watch: {
       widgetStore(value) {
         this.formData = this.$store.getters['widget/widgetsUuid'];
-        console.log(this.formData);
       }
     }
   };

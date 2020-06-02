@@ -178,7 +178,7 @@
         watch: {
             widgetStore(value) {
                 this.formData = this.$store.getters['widget/widgetsUuid'];
-                console.log(this.formData);
+                // console.log(this.formData);
             }
         },
         methods: {

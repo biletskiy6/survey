@@ -77,8 +77,6 @@
           return [];
         },
         set(value) {
-
-          console.log(value);
           return;
           this.$store.commit('survey/updateAnswer', {
             value,
