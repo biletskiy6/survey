@@ -46,7 +46,7 @@
     "vuesax": "3.11.13"
   },
   "devDependencies": {
-    "node-sass": "^4.14.0",
+    "node-sass": "^7.0.0",
     "sass-loader": "^8.0.2",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2"
